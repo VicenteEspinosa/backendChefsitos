@@ -79,6 +79,7 @@ target/
 
 
 ### Django ###
+data/
 *.log
 *.pot
 *.pyc
