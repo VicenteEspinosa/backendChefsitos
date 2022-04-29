@@ -3,7 +3,7 @@ from recipelib.models import User
 from django.http import JsonResponse
 from recipelib.serializers import UserSerializer
 
-def singup(request):
+def signup(request):
     try:
         data = json.loads(request.body.decode("utf-8"))
 
