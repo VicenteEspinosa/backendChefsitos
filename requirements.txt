@@ -3,3 +3,4 @@ psycopg2>=2.8
 requests>=2.20.0
 djangorestframework>=3.9.0
 django-cors-headers>=3.11.0
+jsonschema>=4.4.0

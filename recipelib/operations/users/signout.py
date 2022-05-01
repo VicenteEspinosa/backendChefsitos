@@ -7,5 +7,5 @@ def signout(request):
     return JsonResponse({}, safe=False, status=201)
   except Exception as err:
     print(err)
-  return JsonResponse({"message": "Error"}, safe=False, status=400)
+    return JsonResponse({"internalCode":"internal-error", "message":"An error has ocurred"}, safe=False, status=500)
   
