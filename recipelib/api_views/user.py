@@ -23,7 +23,6 @@ class UserSignup(View):
             user.set_password(data.get('password'))
             user.save()
 
-            headers = {'content-type': 'application/json'}
             return JsonResponse(UserSerializer(user).data, safe=False, status=201)
         except Exception as err:
             print(err)
