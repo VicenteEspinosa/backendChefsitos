@@ -1,3 +1,4 @@
+from recipelib.models.measurement import Measurement
 from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
 from recipelib.models import User, Profile
@@ -28,4 +29,11 @@ class ProfileSerializer(ModelSerializer):
         model = Profile
         fields = (
             'description', 'picture_url'
+        )
+
+class MeasurementSerializer(ModelSerializer):
+    class Meta:
+        model = Measurement
+        fields = (
+            'id', 'name',
         )
