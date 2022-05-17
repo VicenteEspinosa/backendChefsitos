@@ -1,6 +1,7 @@
 from django.http import JsonResponse
-from recipelib.models import Measurement, measurement
+from recipelib.models import Measurement
 from recipelib.serializers import MeasurementSerializer
+from recipelib.utils import already_exists_json_response, error_json_response, not_found_json_response
 
 schema = {
     "type": "object",
@@ -15,15 +16,7 @@ def create_measurement(req, data):
     try:
         measurement = Measurement.objects.filter(name=data.get("name"))
         if measurement:
-            return JsonResponse(
-                {
-                    "internalCode": "entity-not-processable",
-                    "path": "name",
-                    "message": f"Measurement with name '{measurement.name}' already exists",
-                },
-                safe=False,
-                status=422,
-            )
+            return already_exists_json_response("measurement", "name", measurement[0].name)
         measurement = Measurement.objects.create(
             name=data.get("name")
         )
@@ -32,14 +25,7 @@ def create_measurement(req, data):
 
     except Exception as err:
         print(err)
-        return JsonResponse(
-            {
-                "internalCode": "internal-error",
-                "message": "An error has ocurred",
-            },
-            safe=False,
-            status=500,
-        )
+        return error_json_response(err)
 
 create_measurement.schema = schema
 
@@ -49,34 +35,21 @@ def get_all_measurements(req):
         return JsonResponse(MeasurementSerializer(measurements, many=True).data, safe=False, status=200)
     except Exception as err:
         print(err)
-        return JsonResponse(
-            {
-                "internalCode": "internal-error",
-                "message": "An error has ocurred",
-            },
-            safe=False,
-            status=500,
-        )
+        return error_json_response(err)
+
     
-def get_measurement_by_id(req, measurement_id):
+def get_measurement_by_id(req, measurement):
     try:
-        measurement = Measurement.objects.filter(pk=measurement_id)
-        if measurement:
-            return JsonResponse(MeasurementSerializer(measurement[0]).data, safe=False, status=200)
-        return JsonResponse(
-                {
-                    "message": "measurement not found",
-                },
-                safe=False,
-                status=404,
-            )
+        return JsonResponse(MeasurementSerializer(measurement).data, safe=False, status=200)
     except Exception as err:
         print(err)
-        return JsonResponse(
-            {
-                "internalCode": "internal-error",
-                "message": "An error has ocurred",
-            },
-            safe=False,
-            status=500,
-        )
+        return error_json_response(err)
+
+    
+def delete_measurement_by_id(req, measurement):
+    try:
+        measurement.delete()
+        return JsonResponse({"message": "measurement deleted successfully"}, safe=False, status=200)
+    except Exception as err:
+        print(err)
+        return error_json_response(err)
