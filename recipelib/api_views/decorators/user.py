@@ -1,8 +1,10 @@
 from functools import wraps
 
 from recipelib.models import Measurement
-from recipelib.utils import (not_an_admin_json_response,
-                             not_logged_in_json_response)
+from recipelib.utils import (
+    not_an_admin_json_response,
+    not_logged_in_json_response,
+)
 
 
 def logged_in_check(view):

@@ -2,13 +2,19 @@ from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 
-from recipelib.api_views.decorators.measurement import find_measurement_by_id
+from recipelib.api_views.decorators.measurement import (
+    find_measurement_by_id,
+)
 from recipelib.api_views.decorators.user import admin_check
-from recipelib.infrastructure.validation.request_validation import \
-    validate_request
+from recipelib.infrastructure.validation.request_validation import (
+    validate_request,
+)
 from recipelib.operations.measurements.measurement_actions import (
-    create_measurement, delete_measurement_by_id, get_all_measurements,
-    get_measurement_by_id)
+    create_measurement,
+    delete_measurement_by_id,
+    get_all_measurements,
+    get_measurement_by_id,
+)
 
 
 @method_decorator(csrf_exempt, name="dispatch")

@@ -2,8 +2,9 @@ from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 
-from recipelib.infrastructure.validation.request_validation import \
-    validate_request
+from recipelib.infrastructure.validation.request_validation import (
+    validate_request,
+)
 from recipelib.operations.users.signin import signin
 from recipelib.operations.users.signout import signout
 from recipelib.operations.users.signup import signup

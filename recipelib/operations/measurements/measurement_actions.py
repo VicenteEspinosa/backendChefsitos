@@ -2,8 +2,11 @@ from django.http import JsonResponse
 
 from recipelib.models import Measurement
 from recipelib.serializers import MeasurementSerializer
-from recipelib.utils import (already_exists_json_response, error_json_response,
-                             not_found_json_response)
+from recipelib.utils import (
+    already_exists_json_response,
+    error_json_response,
+    not_found_json_response,
+)
 
 schema = {
     "type": "object",
