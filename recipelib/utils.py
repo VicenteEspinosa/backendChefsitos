@@ -1,6 +1,9 @@
 from django.http import JsonResponse
 
-def already_exists_json_response(model_name="model", key_name="key", value="value"):
+
+def already_exists_json_response(
+    model_name="model", key_name="key", value="value"
+):
     return JsonResponse(
         {
             "internalCode": "entity-not-processable",
@@ -11,25 +14,28 @@ def already_exists_json_response(model_name="model", key_name="key", value="valu
         status=422,
     )
 
+
 def error_json_response(error):
     return JsonResponse(
         {
             "internalCode": "internal-error",
             "message": "An error has ocurred",
-            "error_content": str(error)
+            "error_content": str(error),
         },
         safe=False,
         status=500,
     )
 
+
 def not_an_admin_json_response():
     return JsonResponse(
         {
-            "message": f"This action is only for administrators",
+            "message": "This action is only for administrators",
         },
         safe=False,
         status=403,
     )
+
 
 def not_found_json_response(object_name="item"):
     return JsonResponse(
@@ -40,10 +46,11 @@ def not_found_json_response(object_name="item"):
         status=404,
     )
 
+
 def not_logged_in_json_response():
     return JsonResponse(
         {
-            "message": f"Please sign in to access this endpoint",
+            "message": "Please sign in to access this endpoint",
         },
         safe=False,
         status=401,

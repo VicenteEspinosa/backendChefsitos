@@ -1,7 +1,10 @@
 from functools import wraps
+
 from django.http import JsonResponse
+
 from recipelib.models import Measurement
 from recipelib.utils import error_json_response, not_found_json_response
+
 
 def find_measurement_by_id(view):
     @wraps(view)
@@ -16,5 +19,5 @@ def find_measurement_by_id(view):
         except Exception as err:
             print(err)
             return error_json_response(err)
-        
+
     return wrapper

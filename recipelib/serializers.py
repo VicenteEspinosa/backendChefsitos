@@ -1,39 +1,43 @@
-from recipelib.models.measurement import Measurement
-from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
-from recipelib.models import User, Profile
+from rest_framework.serializers import ModelSerializer
 
-
-from .models import User
+from recipelib.models import Profile, User
+from recipelib.models.measurement import Measurement
 
 
 class UserSerializer(ModelSerializer):
-    picture_url = serializers.SerializerMethodField('get_picture_url')
-    description = serializers.SerializerMethodField('get_description')
+    picture_url = serializers.SerializerMethodField("get_picture_url")
+    description = serializers.SerializerMethodField("get_description")
 
     class Meta:
         model = User
         fields = (
-            'id', 'username', 'email', 'first_name', 'last_name', 'description', 'picture_url'
+            "id",
+            "username",
+            "email",
+            "first_name",
+            "last_name",
+            "description",
+            "picture_url",
         )
 
     def get_picture_url(self, obj):
-        return ProfileSerializer(obj.profile).data.get('picture_url')
-    
+        return ProfileSerializer(obj.profile).data.get("picture_url")
+
     def get_description(self, obj):
-        return ProfileSerializer(obj.profile).data.get('description')
+        return ProfileSerializer(obj.profile).data.get("description")
 
 
 class ProfileSerializer(ModelSerializer):
     class Meta:
         model = Profile
-        fields = (
-            'description', 'picture_url'
-        )
+        fields = ("description", "picture_url")
+
 
 class MeasurementSerializer(ModelSerializer):
     class Meta:
         model = Measurement
         fields = (
-            'id', 'name',
+            "id",
+            "name",
         )
