@@ -8,9 +8,7 @@ from recipelib.utils import error_json_response, not_found_json_response
 
 def find_measurement_by_id(view):
     @wraps(view)
-    def wrapper(request, measurement_id=None, *args, **kwargs):
-        if measurement_id is None:
-            return view(request, None, *args, **kwargs)
+    def wrapper(request, measurement_id, *args, **kwargs):
         try:
             measurement_array = Measurement.objects.filter(pk=measurement_id)
             if measurement_array:

@@ -11,19 +11,22 @@ from recipelib.infrastructure.validation.request_validation import (
 )
 from recipelib.operations.measurements.measurement_actions import (
     create_measurement,
-    delete_measurement_by_id,
+    delete_measurement,
     get_all_measurements,
-    get_measurement_by_id,
+    get_measurement,
 )
 
 
 @method_decorator(csrf_exempt, name="dispatch")
 class MeasurementView(View):
-    @method_decorator(find_measurement_by_id)
-    def get(self, req, measurement=None):
-        if measurement is not None:
-            return get_measurement_by_id(req, measurement)
+    def get(self, req, measurement_id=None):
+        if measurement_id is not None:
+            return self.get_specific(req, measurement_id)
         return get_all_measurements(req)
+
+    @method_decorator(find_measurement_by_id)
+    def get_specific(self, req, measurement):
+        return get_measurement(req, measurement)
 
     @method_decorator(admin_check)
     def post(self, req):
@@ -32,4 +35,4 @@ class MeasurementView(View):
     @method_decorator(admin_check)
     @method_decorator(find_measurement_by_id)
     def delete(self, req, measurement):
-        return delete_measurement_by_id(req, measurement)
+        return delete_measurement(req, measurement)

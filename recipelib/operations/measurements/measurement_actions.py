@@ -51,7 +51,7 @@ def get_all_measurements(req):
         return error_json_response(err)
 
 
-def get_measurement_by_id(req, measurement):
+def get_measurement(req, measurement):
     try:
         return JsonResponse(
             MeasurementSerializer(measurement).data, safe=False, status=200
@@ -61,7 +61,7 @@ def get_measurement_by_id(req, measurement):
         return error_json_response(err)
 
 
-def delete_measurement_by_id(req, measurement):
+def delete_measurement(req, measurement):
     try:
         measurement.delete()
         return JsonResponse(
