@@ -16,6 +16,13 @@ Luego es necesario instalar pre-commit en el repositorio:
 pre-commit install
 ```
 
+Para ejecutar un chequeo que entregue output detallado usar en la carpeta raíz del proyecto:
+
+```bash
+pre-commit run --all-files -v 
+```
+
+
 Ejecutar los siguientes comandos:
 
 ```bash
@@ -27,4 +34,7 @@ Si no tienen permisos para editar los archivos del proyecto utilicen:
 ```bash
 sudo chown -R $USER:$USER project_folder_name
 ```
+
+
+
 El backend estará corriendo en [http://localhost:8000](http://localhost:8000)
