@@ -10,5 +10,17 @@
         "password": "admin",
         "is_superuser": true
       }
+    },
+    {
+      "pk": 2,
+      "model": "auth.user",
+      "fields": {
+        "username": "generic",
+        "email": "generic@uc.cl",
+        "first_name": "Usuario",
+        "last_name": "Generico",
+        "password": "generic",
+        "is_superuser": false
+      }
     }
 ]
