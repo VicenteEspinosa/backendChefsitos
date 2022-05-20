@@ -7,7 +7,7 @@ from django.urls import reverse
 from recipelib.models import Measurement, User
 
 
-class TestViews(TransactionTestCase):
+class TestMeasurementViews(TransactionTestCase):
     reset_sequences = True
 
     # DELETE #
