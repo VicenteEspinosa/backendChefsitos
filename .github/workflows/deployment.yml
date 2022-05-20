@@ -16,6 +16,6 @@ jobs:
       with:
         fetch-depth: 0
     - name: Build docker image
-      run: docker-compose up
+      run: docker-compose up -d
     - name: Run Tests
       run: docker-compose run web python manage.py test
