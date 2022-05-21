@@ -19,5 +19,3 @@ jobs:
       run: docker-compose up -d
     - name: Run Tests
       run: docker-compose run web python manage.py test
-    - uses: actions/setup-python@v2
-    - uses: pre-commit/action@v2.0.3
