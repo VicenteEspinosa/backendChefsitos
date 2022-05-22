@@ -3,6 +3,7 @@ repos:
     rev: 22.3.0
     hooks:
     - id: black
+      exclude: ^.*\b(migrations)\b.*$
 
 -   repo: https://github.com/PyCQA/isort
     rev: 5.10.1
@@ -14,4 +15,16 @@ repos:
     rev: 3.9.2
     hooks:
     - id: flake8
+
+ci:
+    autofix_commit_msg: |
+        [pre-commit.ci] auto fixes from pre-commit.com hooks
+
+        for more information, see https://pre-commit.ci
+    autofix_prs: true
+    autoupdate_branch: ''
+    autoupdate_commit_msg: '[pre-commit.ci] pre-commit autoupdate'
+    autoupdate_schedule: weekly
+    skip: []
+    submodules: 'false'
     

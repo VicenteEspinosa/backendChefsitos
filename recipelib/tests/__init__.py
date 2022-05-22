@@ -1,1 +1,2 @@
-from .test_measurements.test_views import TestViews
+from .test_ingredients.test_views import TestIngredientViews
+from .test_measurements.test_views import TestMeasurementViews

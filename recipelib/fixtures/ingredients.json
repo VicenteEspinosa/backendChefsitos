@@ -1,0 +1,9 @@
+[
+    {
+      "pk": 1,
+      "model": "recipelib.ingredient",
+      "fields": {
+        "name": "pimienta"
+      }
+    }
+]

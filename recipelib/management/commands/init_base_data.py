@@ -6,6 +6,7 @@ class Command(BaseCommand):
     help = "DEV COMMAND: Fill database with initial data"
 
     def handle(self, *args, **options):
+        call_command("loaddata", "ingredients")
         call_command("loaddata", "measurements")
         call_command("loaddata", "users")
         # Fix the passwords of fixtures
