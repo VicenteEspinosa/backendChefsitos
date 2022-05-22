@@ -1,7 +1,14 @@
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 
-from recipelib.models import Ingredient, Measurement, Profile, User
+from recipelib.models import (
+    Ingredient,
+    Item,
+    Measurement,
+    Profile,
+    Recipe,
+    User,
+)
 
 
 class UserSerializer(ModelSerializer):
@@ -49,3 +56,23 @@ class IngredientSerializer(ModelSerializer):
             "id",
             "name",
         )
+
+
+class RecipeSerializer(ModelSerializer):
+    class Meta:
+        model = Recipe
+        fields = (
+            "id",
+            "name",
+            "picture_url",
+            "description",
+            "private",
+            "created_at",
+            "updated_at",
+        )
+
+
+class ItemSerializer(ModelSerializer):
+    class Meta:
+        model = Item
+        fields = ("id", "url", "body", "order_number")
