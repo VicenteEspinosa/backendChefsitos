@@ -62,7 +62,7 @@ create_recipe.schema = schema
 
 def get_self_recipes(req):
     try:
-        recipes = Recipe.objects.filter(user=req.user)
+        recipes = Recipe.objects.filter(user=req.user).order_by("-created_at")
         return JsonResponse(
             RecipeSerializer(recipes, many=True).data,
             safe=False,
