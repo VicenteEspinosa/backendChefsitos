@@ -1,0 +1,23 @@
+[
+    {
+      "pk": 1,
+      "model": "recipelib.tag",
+      "fields": {
+        "name": "pollo"
+      }
+    }, 
+    {
+        "pk": 2,
+        "model": "recipelib.tag",
+        "fields": {
+          "name": "carne"
+        }
+    },
+    {
+        "pk": 3,
+        "model": "recipelib.tag",
+        "fields": {
+          "name": "vegetariano"
+        }
+    }
+]

@@ -7,6 +7,7 @@ from recipelib.models import (
     Measurement,
     Profile,
     Recipe,
+    Tag,
     User,
 )
 
@@ -76,3 +77,9 @@ class ItemSerializer(ModelSerializer):
     class Meta:
         model = Item
         fields = ("id", "url", "body", "order_number")
+
+
+class TagSerializer(ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = ("id", "name")
