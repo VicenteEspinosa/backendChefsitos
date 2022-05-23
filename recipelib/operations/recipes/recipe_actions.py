@@ -13,7 +13,7 @@ schema = {
                 "body": {"type": "string"},
                 "order_number": {"type": "integer"},
             },
-            "oneOf": [
+            "anyOf": [
                 {"required": ["url", "order_number"]},
                 {"required": ["body", "order_number"]},
             ],
