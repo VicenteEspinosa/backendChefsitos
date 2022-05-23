@@ -35,6 +35,22 @@ Si no tienen permisos para editar los archivos del proyecto utilicen:
 sudo chown -R $USER:$USER project_folder_name
 ```
 
+Para hacer el seed inicial, usar este comando:
 
+```bash
+docker compose run web python manage.py init_base_data
+```
+
+Si se requiere por alguna razón borrar los datos presentes en la DB, usar:
+
+```bash
+docker compose run web python manage.py flush
+```
+
+Para correr los test unitarios usar: 
+
+```bash
+docker compose run web python manage.py test
+```
 
 El backend estará corriendo en [http://localhost:8000](http://localhost:8000)

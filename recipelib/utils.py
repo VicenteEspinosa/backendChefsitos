@@ -15,6 +15,16 @@ def already_exists_json_response(
     )
 
 
+def empty_string_json_response(field_name="field"):
+    return JsonResponse(
+        {
+            "message": f"The field '{field_name}' must not be an empty string",
+        },
+        safe=False,
+        status=400,
+    )
+
+
 def error_json_response(error):
     return JsonResponse(
         {

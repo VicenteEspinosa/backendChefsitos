@@ -1,7 +1,5 @@
 from functools import wraps
 
-from django.http import JsonResponse
-
 from recipelib.models import Measurement
 from recipelib.utils import error_json_response, not_found_json_response
 

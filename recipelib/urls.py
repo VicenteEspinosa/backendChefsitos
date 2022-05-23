@@ -3,6 +3,13 @@ from django.urls import include, path
 from . import views
 
 urlpatterns = [
+    path("recipes/", views.RecipeView.as_view(), name="recipes"),
+    path("ingredients/", views.IngredientView.as_view(), name="ingredients"),
+    path(
+        "ingredients/<int:ingredient_id>/",
+        views.IngredientView.as_view(),
+        name="ingredients",
+    ),
     path(
         "measurements/", views.MeasurementView.as_view(), name="measurements"
     ),
