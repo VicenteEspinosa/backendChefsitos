@@ -58,3 +58,16 @@ def create_recipe(req, data):
 
 
 create_recipe.schema = schema
+
+
+def get_self_recipes(req):
+    try:
+        recipes = Recipe.objects.filter(user=req.user)
+        return JsonResponse(
+            RecipeSerializer(recipes, many=True).data,
+            safe=False,
+            status=200,
+        )
+    except Exception as err:
+        print(err)
+        return error_json_response(err)
