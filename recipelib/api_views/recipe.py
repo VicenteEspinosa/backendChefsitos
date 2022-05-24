@@ -6,7 +6,10 @@ from recipelib.api_views.decorators.user import logged_in_check
 from recipelib.infrastructure.validation.request_validation import (
     validate_request,
 )
-from recipelib.operations.recipes.recipe_actions import create_recipe
+from recipelib.operations.recipes.recipe_actions import (
+    create_recipe,
+    get_self_recipes,
+)
 
 
 @method_decorator(csrf_exempt, name="dispatch")
@@ -14,3 +17,10 @@ class RecipeView(View):
     @method_decorator(logged_in_check)
     def post(self, req):
         return validate_request(req, create_recipe)
+
+
+@method_decorator(csrf_exempt, name="dispatch")
+class SelfRecipesView(View):
+    @method_decorator(logged_in_check)
+    def get(self, req):
+        return get_self_recipes(req)
