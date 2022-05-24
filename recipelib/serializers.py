@@ -82,4 +82,4 @@ class ItemSerializer(ModelSerializer):
 class TagSerializer(ModelSerializer):
     class Meta:
         model = Tag
-        fields = ("id", "name")
+        fields = ("id", "name", "placeholder_url")

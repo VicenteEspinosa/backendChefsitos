@@ -12,8 +12,9 @@ schema = {
     "type": "object",
     "properties": {
         "name": {"type": "string"},
+        "placeholder_url":{"type": "string"},
     },
-    "required": ["name"],
+    "required": ["name", "placeholder_url"],
 }
 
 
@@ -22,7 +23,7 @@ def create_tag(req, data):
         tag = Tag.objects.filter(name=data.get("name"))
         if tag:
             return already_exists_json_response("tag", "name", tag[0].name)
-        tag = Tag.objects.create(name=data.get("name"))
+        tag = Tag.objects.create(name=data.get("name"), placeholder_url=data.get("placeholder_url"))
         tag.save()
         return JsonResponse(TagSerializer(tag).data, safe=False, status=201)
 

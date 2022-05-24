@@ -3,21 +3,24 @@
       "pk": 1,
       "model": "recipelib.tag",
       "fields": {
-        "name": "pollo"
+        "name": "pollo",
+        "placeholder_url": "https://www.elespectador.com/resizer/zrHvj5z4L2SoruKnWNYnT4YmuFo=/920x613/filters:format(jpeg)/cloudfront-us-east-1.images.arcpublishing.com/elespectador/2F4WF2CH7BC4DCCLMRBGS34KVQ.jpg"
       }
     }, 
     {
         "pk": 2,
         "model": "recipelib.tag",
         "fields": {
-          "name": "carne"
+          "name": "carne",
+          "placeholder_url":"https://cdn2.cocinadelirante.com/sites/default/files/images/2019/04/como-sauvizar-carnes.jpg"
         }
     },
     {
         "pk": 3,
         "model": "recipelib.tag",
         "fields": {
-          "name": "vegetariano"
+          "name": "vegetariano",
+          "placeholder_url": "https://i0.wp.com/post.healthline.com/wp-content/uploads/2022/04/vegetarian-vegetables-eggs-1296x728-header.jpg?w=1155&h=1528"
         }
     }
 ]
