@@ -71,3 +71,15 @@ def get_self_recipes(req):
     except Exception as err:
         print(err)
         return error_json_response(err)
+
+
+def get_single_recipe(req, recipe):
+    try:
+        return JsonResponse(
+            RecipeSerializer(recipe).data,
+            safe=False,
+            status=200,
+        )
+    except Exception as err:
+        print(err)
+        return error_json_response(err)

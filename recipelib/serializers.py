@@ -7,6 +7,7 @@ from recipelib.models import (
     Measurement,
     Profile,
     Recipe,
+    RecipeMeasurementIngredient,
     User,
 )
 
@@ -58,7 +59,30 @@ class IngredientSerializer(ModelSerializer):
         )
 
 
+class RecipeMeasurementIngredientSerializer(ModelSerializer):
+    ingredient_id = serializers.ReadOnlyField(source="ingredient.id")
+    ingredient_name = serializers.ReadOnlyField(source="ingredient.name")
+    measurement_id = serializers.ReadOnlyField(source="measurement.id")
+    measurement_name = serializers.ReadOnlyField(source="measurement.name")
+
+    class Meta:
+        model = RecipeMeasurementIngredient
+
+        fields = (
+            "id",
+            "ingredient_id",
+            "ingredient_name",
+            "measurement_id",
+            "measurement_name",
+            "quantity",
+        )
+
+
 class RecipeSerializer(ModelSerializer):
+    ingredients = RecipeMeasurementIngredientSerializer(
+        source="recipemeasurementingredient_set", many=True, read_only=True
+    )
+
     class Meta:
         model = Recipe
         fields = (
@@ -69,6 +93,7 @@ class RecipeSerializer(ModelSerializer):
             "private",
             "created_at",
             "updated_at",
+            "ingredients",
         )
 
 
