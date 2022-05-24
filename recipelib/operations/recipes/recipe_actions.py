@@ -62,6 +62,7 @@ schema = {
 
 
 def create_recipe(req, data):
+    print(data)
     try:
         tags = Tag.objects.filter(id__in=data["tagIds"])
         if len(tags) != len(data["tagIds"]):
@@ -73,19 +74,29 @@ def create_recipe(req, data):
             item["measurement_id"] for item in data["ingredients"]
         ]
         measurements = Measurement.objects.filter(id__in=req_measurement_ids)
-        if len(measurements) != len(req_measurement_ids):
-            measurement_ids = [measurement.id for measurement in measurements]
+        measurement_ids = [measurement.id for measurement in measurements]
+        measurement_ids_not_founds = [
+            measurement_id
+            for measurement_id in req_measurement_ids
+            if measurement_id not in measurement_ids
+        ]
+        if len(measurement_ids_not_founds) != 0:
             return not_found_json_response(
-                f"measurementIds: {[ measurement_id for measurement_id in req_measurement_ids if measurement_id not in measurement_ids ]}"
+                f"measurementIds: {measurement_ids_not_founds}"
             )
         req_ingredient_ids = [
             item["ingredient_id"] for item in data["ingredients"]
         ]
         ingredients = Ingredient.objects.filter(id__in=req_ingredient_ids)
-        if len(ingredients) != len(req_ingredient_ids):
-            ingredient_ids = [ingredient.id for ingredient in ingredients]
+        ingredient_ids = [ingredient.id for ingredient in ingredients]
+        ingredient_ids_not_founds = [
+            ingredient_id
+            for ingredient_id in req_ingredient_ids
+            if ingredient_id not in ingredient_ids
+        ]
+        if len(ingredient_ids_not_founds) != 0:
             return not_found_json_response(
-                f"ingredientIds: {[ ingredient_id for ingredient_id in req_ingredient_ids if ingredient_id not in ingredient_ids ]}"
+                f"ingredientIds: {ingredient_ids_not_founds}"
             )
         with transaction.atomic():
             recipe = Recipe.objects.create(
