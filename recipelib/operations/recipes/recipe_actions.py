@@ -62,7 +62,6 @@ schema = {
 
 
 def create_recipe(req, data):
-    print(data)
     try:
         tags = Tag.objects.filter(id__in=data["tagIds"])
         if len(tags) != len(data["tagIds"]):
