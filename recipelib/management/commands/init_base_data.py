@@ -8,6 +8,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         call_command("loaddata", "ingredients")
         call_command("loaddata", "measurements")
+        call_command("loaddata", "tags")
         call_command("loaddata", "users")
         # Fix the passwords of fixtures
         for user in User.objects.all():

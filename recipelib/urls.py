@@ -21,6 +21,12 @@ urlpatterns = [
         views.MeasurementView.as_view(),
         name="measurements",
     ),
+    path("tags/", views.TagView.as_view(), name="tags"),
+    path(
+        "tags/<int:tag_id>/",
+        views.TagView.as_view(),
+        name="tags",
+    ),
     path("users/signup/", views.UserSignup.as_view(), name="user_signup"),
     path("users/signin/", views.UserSignin.as_view(), name="user_signin"),
     path("users/signout/", views.UserSignout.as_view(), name="user_signout"),
