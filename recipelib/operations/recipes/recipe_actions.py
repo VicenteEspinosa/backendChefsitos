@@ -1,9 +1,17 @@
 from django.db import transaction
 from django.http import JsonResponse
 
-from recipelib.models import Item, Recipe
-from recipelib.serializers import ItemSerializer, RecipeSerializer
-from recipelib.utils import error_json_response
+from recipelib.models import (
+    Ingredient,
+    Item,
+    Measurement,
+    Recipe,
+    RecipeMeasurementIngredient,
+    RecipeTag,
+    Tag,
+)
+from recipelib.serializers import RecipeSerializer
+from recipelib.utils import error_json_response, not_found_json_response
 
 schema = {
     "definitions": {
@@ -18,6 +26,14 @@ schema = {
                 {"required": ["body", "order_number"]},
             ],
         },
+        "Ingredient": {
+            "properties": {
+                "measurement_id": {"type": "integer"},
+                "ingredient_id": {"type": "integer"},
+                "quantity": {"type": "integer"},
+            },
+            "required": ["measurement_id", "ingredient_id", "quantity"],
+        },
     },
     "type": "object",
     "properties": {
@@ -29,25 +45,75 @@ schema = {
             "type": "array",
             "items": {"$ref": "#/definitions/Item"},
         },
+        "tagIds": {
+            "type": "array",
+            "items": {
+                "type": "integer",
+            },
+            "uniqueItems": True,
+        },
+        "measurements": {
+            "type": "array",
+            "items": {"$ref": "#/definitions/Ingredient"},
+        },
     },
-    "required": ["name", "items"],
+    "required": ["name", "items", "tagIds", "ingredients"],
 }
 
 
 def create_recipe(req, data):
     try:
-        with transaction.atomic():
-            items = data["items"]
-            del data["items"]
-            recipe = Recipe.objects.create(**data, user=req.user)
-            recipe.save()
-            items = Item.objects.bulk_create(
-                [Item(**item, recipe=recipe) for item in items]
+        tags = Tag.objects.filter(id__in=data["tagIds"])
+        if len(tags) != len(data["tagIds"]):
+            tag_ids = [tag.id for tag in tags]
+            return not_found_json_response(
+                f"tagIds: {[ tag_id for tag_id in data['tagIds'] if tag_id not in tag_ids ]}"
             )
+        req_measurement_ids = [
+            item["measurement_id"] for item in data["ingredients"]
+        ]
+        measurements = Measurement.objects.filter(id__in=req_measurement_ids)
+        if len(measurements) != len(req_measurement_ids):
+            measurement_ids = [measurement.id for measurement in measurements]
+            return not_found_json_response(
+                f"measurementIds: {[ measurement_id for measurement_id in req_measurement_ids if measurement_id not in measurement_ids ]}"
+            )
+        req_ingredient_ids = [
+            item["ingredient_id"] for item in data["ingredients"]
+        ]
+        ingredients = Ingredient.objects.filter(id__in=req_ingredient_ids)
+        if len(ingredients) != len(req_ingredient_ids):
+            ingredient_ids = [ingredient.id for ingredient in ingredients]
+            return not_found_json_response(
+                f"ingredientIds: {[ ingredient_id for ingredient_id in req_ingredient_ids if ingredient_id not in ingredient_ids ]}"
+            )
+        with transaction.atomic():
+            recipe = Recipe.objects.create(
+                **{
+                    k: data[k]
+                    for k in data.keys() - {"items", "tagIds", "ingredients"}
+                },
+                user=req.user,
+            )
+            recipe.save()
+            Item.objects.bulk_create(
+                [Item(**item, recipe=recipe) for item in data["items"]]
+            )
+            RecipeMeasurementIngredient.objects.bulk_create(
+                [
+                    RecipeMeasurementIngredient(**item, recipe=recipe)
+                    for item in data["ingredients"]
+                ]
+            )
+            RecipeTag.objects.bulk_create(
+                [RecipeTag(tag_id=id, recipe=recipe) for id in data["tagIds"]]
+            )
+            print(recipe.__dict__)
+            recipe = Recipe.objects.get(pk=recipe.id)
+
             return JsonResponse(
                 {
                     **RecipeSerializer(recipe).data,
-                    "items": [ItemSerializer(item).data for item in items],
                 },
                 safe=False,
                 status=201,
@@ -65,6 +131,18 @@ def get_self_recipes(req):
         recipes = Recipe.objects.filter(user=req.user).order_by("-created_at")
         return JsonResponse(
             RecipeSerializer(recipes, many=True).data,
+            safe=False,
+            status=200,
+        )
+    except Exception as err:
+        print(err)
+        return error_json_response(err)
+
+
+def get_single_recipe(req, recipe):
+    try:
+        return JsonResponse(
+            RecipeSerializer(recipe).data,
             safe=False,
             status=200,
         )

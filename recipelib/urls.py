@@ -7,6 +7,11 @@ urlpatterns = [
     path(
         "recipes/self/", views.SelfRecipesView.as_view(), name="self_recipes"
     ),
+    path(
+        "recipes/<int:recipe_id>/",
+        views.SingleRecipeView.as_view(),
+        name="single_recipe",
+    ),
     path("ingredients/", views.IngredientView.as_view(), name="ingredients"),
     path(
         "ingredients/<int:ingredient_id>/",
