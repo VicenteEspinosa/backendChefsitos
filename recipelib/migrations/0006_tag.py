@@ -14,11 +14,11 @@ class Migration(migrations.Migration):
             name="Tag",
             fields=[
                 (
-                    "id", 
+                    "id",
                     models.BigAutoField(
-                        auto_created=True, 
-                        primary_key=True, 
-                        serialize=False, 
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
                         verbose_name='ID'
                     )
                 ),
