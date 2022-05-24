@@ -7,6 +7,8 @@ from recipelib.models import (
     Measurement,
     Profile,
     Recipe,
+    RecipeMeasurementIngredient,
+    Tag,
     User,
 )
 
@@ -58,7 +60,58 @@ class IngredientSerializer(ModelSerializer):
         )
 
 
+class RecipeMeasurementIngredientSerializer(ModelSerializer):
+    ingredient_id = serializers.ReadOnlyField(source="ingredient.id")
+    ingredient_name = serializers.ReadOnlyField(source="ingredient.name")
+    measurement_id = serializers.ReadOnlyField(source="measurement.id")
+    measurement_name = serializers.ReadOnlyField(source="measurement.name")
+
+    class Meta:
+        model = RecipeMeasurementIngredient
+
+        fields = (
+            "id",
+            "ingredient_id",
+            "ingredient_name",
+            "measurement_id",
+            "measurement_name",
+            "quantity",
+        )
+
+
+class RecipeTagSerializer(ModelSerializer):
+    tag_id = serializers.ReadOnlyField(source="tag.id")
+    tag_name = serializers.ReadOnlyField(source="tag.name")
+    tag_placeholder_url = serializers.ReadOnlyField(
+        source="tag.placeholder_url"
+    )
+
+    class Meta:
+        model = RecipeMeasurementIngredient
+
+        fields = (
+            "id",
+            "tag_id",
+            "tag_name",
+            "tag_placeholder_url",
+        )
+
+
+class ItemSerializer(ModelSerializer):
+    class Meta:
+        model = Item
+        fields = ("id", "url", "body", "order_number")
+
+
 class RecipeSerializer(ModelSerializer):
+    ingredients = RecipeMeasurementIngredientSerializer(
+        source="recipemeasurementingredient_set", many=True, read_only=True
+    )
+    items = ItemSerializer(source="item_set", many=True, read_only=True)
+    tags = RecipeTagSerializer(
+        source="recipetag_set", many=True, read_only=True
+    )
+
     class Meta:
         model = Recipe
         fields = (
@@ -69,10 +122,13 @@ class RecipeSerializer(ModelSerializer):
             "private",
             "created_at",
             "updated_at",
+            "ingredients",
+            "items",
+            "tags",
         )
 
 
-class ItemSerializer(ModelSerializer):
+class TagSerializer(ModelSerializer):
     class Meta:
-        model = Item
-        fields = ("id", "url", "body", "order_number")
+        model = Tag
+        fields = ("id", "name", "placeholder_url")

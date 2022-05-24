@@ -1,0 +1,10 @@
+{
+  "model": "recipelib.recipemeasurementingredient",
+  "pk": 1,
+  "fields": {
+    "recipe": 1,
+    "measurement": 1,
+    "ingredient": 1,
+    "quantity": 5
+  }
+}
