@@ -3,6 +3,7 @@ from django.db import models
 
 from recipelib.models.ingredient import Ingredient
 from recipelib.models.measurement import Measurement
+from recipelib.models.tag import Tag
 
 
 class Recipe(models.Model):
@@ -19,3 +20,4 @@ class Recipe(models.Model):
     ingredients = models.ManyToManyField(
         Ingredient, through="RecipeMeasurementIngredient"
     )
+    tags = models.ManyToManyField(Tag, through="RecipeTag")
