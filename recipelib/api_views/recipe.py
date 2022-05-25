@@ -9,6 +9,7 @@ from recipelib.infrastructure.validation.request_validation import (
 )
 from recipelib.operations.recipes.recipe_actions import (
     create_recipe,
+    delete_recipe,
     edit_recipe,
     get_self_recipes,
     get_single_recipe,
@@ -30,6 +31,11 @@ class RecipeView(View):
     @method_decorator(find_recipe_by_id)
     def put(self, req, recipe):
         return validate_request(req, edit_recipe, recipe)
+
+    @method_decorator(logged_in_check)
+    @method_decorator(find_recipe_by_id)
+    def delete(self, req, recipe):
+        return validate_request(req, delete_recipe, recipe)
 
 
 @method_decorator(csrf_exempt, name="dispatch")
