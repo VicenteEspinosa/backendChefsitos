@@ -128,7 +128,7 @@ class TestRecipeViews(TransactionTestCase):
             recipe=recipe, measurement=measu, ingredient=ingredient, quantity=1
         )
 
-        url = reverse("single_recipe", args=[1])
+        url = reverse("recipes", args=[1])
         response = client.get(url)
         data = response.json()
         self.assertEqual(response.status_code, 200)
@@ -140,6 +140,6 @@ class TestRecipeViews(TransactionTestCase):
         client.force_login(
             User.objects.get_or_create(username="generic_user")[0]
         )
-        url = reverse("single_recipe", args=[1])
+        url = reverse("recipes", args=[1])
         response = client.get(url)
         self.assertEqual(response.status_code, 500)

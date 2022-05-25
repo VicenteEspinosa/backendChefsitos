@@ -9,8 +9,8 @@ urlpatterns = [
     ),
     path(
         "recipes/<int:recipe_id>/",
-        views.SingleRecipeView.as_view(),
-        name="single_recipe",
+        views.RecipeView.as_view(),
+        name="recipes",
     ),
     path("ingredients/", views.IngredientView.as_view(), name="ingredients"),
     path(
