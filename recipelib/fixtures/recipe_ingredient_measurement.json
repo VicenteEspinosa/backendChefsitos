@@ -1,0 +1,20 @@
+[{
+  "model": "recipelib.recipemeasurementingredient",
+  "pk": 1,
+  "fields": {
+    "recipe_id": 1,
+    "measurement_id": 3,
+    "ingredient_id": 2,
+    "quantity": 1
+  }
+},
+{
+  "model": "recipelib.recipemeasurementingredient",
+  "pk": 2,
+  "fields": {
+    "recipe_id": 1,
+    "measurement_id": 2,
+    "ingredient_id": 3,
+    "quantity": 2
+  }
+}]

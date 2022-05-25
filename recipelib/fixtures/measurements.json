@@ -1,0 +1,23 @@
+[
+    {
+      "pk": 1,
+      "model": "recipelib.measurement",
+      "fields": {
+        "name": "gr"
+      }
+    },
+    {
+      "pk": 2,
+      "model": "recipelib.measurement",
+      "fields": {
+        "name": "cucharada"
+      }
+    },
+    {
+      "pk": 3,
+      "model": "recipelib.measurement",
+      "fields": {
+        "name": "unidad"
+      }
+    }
+]
