@@ -7,11 +7,10 @@ from recipelib.api_views.recipe import (
     SelfRecipesView,
     SingleRecipeView,
 )
+from recipelib.api_views.tag import TagView
 from recipelib.api_views.user import (
     UserSignin,
     UserSignout,
     UserSignup,
     UserView,
 )
-from recipelib.api_views.tag import TagView
-from recipelib.api_views.user import UserSignin, UserSignout, UserSignup
