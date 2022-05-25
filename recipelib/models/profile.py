@@ -7,7 +7,7 @@ from django.dispatch import receiver
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     description = models.TextField(max_length=500, blank=True)
-    picture_url = models.URLField(blank=True)
+    picture_url = models.CharField(max_length=300)
 
 
 @receiver(post_save, sender=User)
