@@ -1,0 +1,14 @@
+[ 
+  {
+    "pk": 1,
+    "model": "recipelib.recipe",
+    "fields": {
+      "user_id": 2,
+      "name": "huevo frito",
+      "description": "el mejor huevo frito de la galaxia",
+      "picture_url": "https://img-global.cpcdn.com/recipes/38df0212b6629a5a/400x400cq70/photo.jpg",
+      "created_at": "2012-02-23 13:30",
+      "updated_at": "2012-02-23 13:30"
+    }
+  }
+]

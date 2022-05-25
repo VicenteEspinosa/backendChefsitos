@@ -1,0 +1,29 @@
+[
+  {
+    "pk": 1,
+    "model": "recipelib.item",
+    "fields": {
+      "recipe_id":1,
+      "body": "rompe el huevo en una sartén",
+      "order_number": 1
+    }
+  },
+  {
+    "pk": 2,
+    "model": "recipelib.item",
+    "fields": {
+      "recipe_id":1,
+      "body": "pon a calentar la sartén con el aceite",
+      "order_number": 0
+    }
+  },
+  {
+    "pk": 3,
+    "model": "recipelib.item",
+    "fields": {
+      "recipe_id":1,
+      "body": "cocina hasta que la llema cambie de color",
+      "order_number": 3
+    }
+  }
+]

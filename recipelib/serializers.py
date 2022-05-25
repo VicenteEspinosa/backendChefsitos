@@ -125,6 +125,7 @@ class RecipeSerializer(ModelSerializer):
             "ingredients",
             "items",
             "tags",
+            "user_id",
         )
 
 

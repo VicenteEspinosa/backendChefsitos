@@ -10,4 +10,5 @@ class Item(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
 
     class Meta:
+        ordering = ["order_number"]
         unique_together = ("recipe", "order_number")

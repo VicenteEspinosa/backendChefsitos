@@ -5,5 +5,19 @@
       "fields": {
         "name": "pimienta"
       }
+    },
+    {
+      "pk": 2,
+      "model": "recipelib.ingredient",
+      "fields": {
+        "name": "huevo"
+      }
+    },
+    {
+      "pk": 3,
+      "model": "recipelib.ingredient",
+      "fields": {
+        "name": "aceite"
+      }
     }
 ]
