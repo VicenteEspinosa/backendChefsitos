@@ -60,6 +60,7 @@ def not_found_json_response(object_name="item"):
 def not_logged_in_json_response():
     return JsonResponse(
         {
+            "internalCode": "auth-error",
             "message": "Please sign in to access this endpoint",
         },
         safe=False,
