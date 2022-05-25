@@ -35,7 +35,7 @@ class RecipeView(View):
     @method_decorator(logged_in_check)
     @method_decorator(find_recipe_by_id)
     def delete(self, req, recipe):
-        return validate_request(req, delete_recipe, recipe)
+        return delete_recipe(req, recipe)
 
 
 @method_decorator(csrf_exempt, name="dispatch")
