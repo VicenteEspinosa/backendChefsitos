@@ -2,13 +2,17 @@ from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 
-from recipelib.api_views.decorators.recipe import find_recipe_by_id
+from recipelib.api_views.decorators.recipe import (
+    find_recipe_by_id,
+    recipe_belongs_to_user,
+)
 from recipelib.api_views.decorators.user import logged_in_check
 from recipelib.infrastructure.validation.request_validation import (
     validate_request,
 )
 from recipelib.operations.recipes.recipe_actions import (
     create_recipe,
+    delete_recipe,
     edit_recipe,
     get_self_recipes,
     get_single_recipe,
@@ -28,8 +32,15 @@ class RecipeView(View):
 
     @method_decorator(logged_in_check)
     @method_decorator(find_recipe_by_id)
+    @method_decorator(recipe_belongs_to_user)
     def put(self, req, recipe):
         return validate_request(req, edit_recipe, recipe)
+
+    @method_decorator(logged_in_check)
+    @method_decorator(find_recipe_by_id)
+    @method_decorator(recipe_belongs_to_user)
+    def delete(self, req, recipe):
+        return delete_recipe(req, recipe)
 
 
 @method_decorator(csrf_exempt, name="dispatch")

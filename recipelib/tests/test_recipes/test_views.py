@@ -142,4 +142,4 @@ class TestRecipeViews(TransactionTestCase):
         )
         url = reverse("recipes", args=[1])
         response = client.get(url)
-        self.assertEqual(response.status_code, 500)
+        self.assertEqual(response.status_code, 404)

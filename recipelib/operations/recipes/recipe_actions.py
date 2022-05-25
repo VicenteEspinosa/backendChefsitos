@@ -206,3 +206,16 @@ def get_single_recipe(req, recipe):
     except Exception as err:
         print(err)
         return error_json_response(err)
+
+
+def delete_recipe(req, recipe):
+    try:
+        recipe.delete()
+        return JsonResponse(
+            {"message": "Recipe deleted successfully"},
+            safe=False,
+            status=200,
+        )
+    except Exception as err:
+        print(err)
+        return error_json_response(err)

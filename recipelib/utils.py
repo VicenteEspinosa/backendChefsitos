@@ -68,6 +68,17 @@ def not_logged_in_json_response():
     )
 
 
+def not_owner_json_response():
+    return JsonResponse(
+        {
+            "internalCode": "auth-error",
+            "message": "This action is only for administrators or the owner of this entry",
+        },
+        safe=False,
+        status=403,
+    )
+
+
 internal_error = JsonResponse(
     {
         "internalCode": "internal-error",
