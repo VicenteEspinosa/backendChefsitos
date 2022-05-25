@@ -2,9 +2,7 @@ from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 
-from recipelib.api_views.decorators.tag import (
-    find_tag_by_id,
-)
+from recipelib.api_views.decorators.tag import find_tag_by_id
 from recipelib.api_views.decorators.user import admin_check
 from recipelib.infrastructure.validation.request_validation import (
     validate_request,

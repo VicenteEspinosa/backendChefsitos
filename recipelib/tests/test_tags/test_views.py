@@ -88,8 +88,7 @@ class TestTagViews(TransactionTestCase):
             )[0]
         )
         url = reverse("tags")
-        body = {"name": "pastas",
-                "placeholder_url": "test"}
+        body = {"name": "pastas", "placeholder_url": "test"}
         response = client.post(url, body, content_type="application/json")
         data = response.json()
         self.assertEqual(response.status_code, 201)
@@ -106,8 +105,7 @@ class TestTagViews(TransactionTestCase):
             )[0]
         )
         url = reverse("tags")
-        body = {"name": "pastas",
-                "placeholder_url": "test"}
+        body = {"name": "pastas", "placeholder_url": "test"}
         response = client.post(url, body, content_type="application/json")
         self.assertEqual(response.status_code, 422)
         self.assertEqual(Tag.objects.count(), initial_total)
@@ -133,8 +131,7 @@ class TestTagViews(TransactionTestCase):
             User.objects.get_or_create(username="normal_user_test")[0]
         )
         url = reverse("tags")
-        body = {"name": "pastas", 
-                "placeholder_url": "test"}
+        body = {"name": "pastas", "placeholder_url": "test"}
         response = client.post(url, body, content_type="application/json")
         self.assertEqual(response.status_code, 403)
         self.assertEqual(Tag.objects.count(), initial_total)
@@ -142,8 +139,7 @@ class TestTagViews(TransactionTestCase):
     def test_tag_POST_not_logged_in(self):
         initial_total = Tag.objects.count()
         url = reverse("tags")
-        body = {"name": "pastas",
-                "placeholder_url":"test"}
+        body = {"name": "pastas", "placeholder_url": "test"}
         response = Client().post(url, body, content_type="application/json")
         self.assertEqual(response.status_code, 401)
         self.assertEqual(Tag.objects.count(), initial_total)
