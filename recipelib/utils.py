@@ -65,3 +65,14 @@ def not_logged_in_json_response():
         safe=False,
         status=401,
     )
+
+
+internal_error = JsonResponse(
+    {
+        "internalCode": "internal-error",
+        "message": "An error has ocurred",
+        "message": "An error has ocurred",
+    },
+    safe=False,
+    status=500,
+)
