@@ -52,12 +52,11 @@ schema = {
             },
             "uniqueItems": True,
         },
-        "measurements": {
+        "ingredients": {
             "type": "array",
             "items": {"$ref": "#/definitions/Ingredient"},
         },
     },
-    "required": ["name", "items", "tagIds", "ingredients"],
 }
 
 
@@ -118,8 +117,6 @@ def create_recipe(req, data):
             RecipeTag.objects.bulk_create(
                 [RecipeTag(tag_id=id, recipe=recipe) for id in data["tagIds"]]
             )
-            print(recipe.__dict__)
-            recipe = Recipe.objects.get(pk=recipe.id)
 
             return JsonResponse(
                 {
@@ -133,7 +130,57 @@ def create_recipe(req, data):
         return error_json_response(err)
 
 
-create_recipe.schema = schema
+create_recipe.schema = {
+    **schema,
+    "required": ["name", "items", "tagIds", "ingredients"],
+}
+
+
+def edit_recipe(req, data, recipe):
+    try:
+        with transaction.atomic():
+            Recipe.objects.filter(pk=recipe.id).update(
+                **{
+                    k: data[k]
+                    for k in data.keys() - {"items", "tagIds", "ingredients"}
+                }
+            )
+            if "items" in data.keys():
+                Item.objects.filter(recipe=recipe).delete()
+                Item.objects.bulk_create(
+                    [Item(**item, recipe=recipe) for item in data["items"]]
+                )
+            if "tagIds" in data.keys():
+                RecipeTag.objects.filter(recipe=recipe).delete()
+                RecipeTag.objects.bulk_create(
+                    [
+                        RecipeTag(tag_id=id, recipe=recipe)
+                        for id in data["tagIds"]
+                    ]
+                )
+            if "ingredients" in data.keys():
+                RecipeMeasurementIngredient.objects.filter(
+                    recipe=recipe
+                ).delete()
+                RecipeMeasurementIngredient.objects.bulk_create(
+                    [
+                        RecipeMeasurementIngredient(**item, recipe=recipe)
+                        for item in data["ingredients"]
+                    ]
+                )
+            recipe = Recipe.objects.get(pk=recipe.id)
+
+        return JsonResponse(
+            RecipeSerializer(recipe).data,
+            safe=False,
+            status=201,
+        )
+    except Exception as err:
+        print(err)
+        return error_json_response(err)
+
+
+edit_recipe.schema = schema
 
 
 def get_self_recipes(req):

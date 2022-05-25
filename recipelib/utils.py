@@ -72,7 +72,6 @@ internal_error = JsonResponse(
     {
         "internalCode": "internal-error",
         "message": "An error has ocurred",
-        "message": "An error has ocurred",
     },
     safe=False,
     status=500,
