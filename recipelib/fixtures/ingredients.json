@@ -1,23 +1,51 @@
 [
-    {
-      "pk": 1,
-      "model": "recipelib.ingredient",
-      "fields": {
-        "name": "pimienta"
-      }
-    },
-    {
-      "pk": 2,
-      "model": "recipelib.ingredient",
-      "fields": {
-        "name": "huevo"
-      }
-    },
-    {
-      "pk": 3,
-      "model": "recipelib.ingredient",
-      "fields": {
-        "name": "aceite"
-      }
+  {
+    "pk": 1,
+    "model": "recipelib.ingredient",
+    "fields": {
+      "name": "pimienta"
     }
+  },
+  {
+    "pk": 2,
+    "model": "recipelib.ingredient",
+    "fields": {
+      "name": "huevo"
+    }
+  },
+  {
+    "pk": 3,
+    "model": "recipelib.ingredient",
+    "fields": {
+      "name": "aceite"
+    }
+  },
+  {
+    "pk": 4,
+    "model": "recipelib.ingredient",
+    "fields": {
+      "name": "papa"
+    }
+  },
+  {
+    "pk": 5,
+    "model": "recipelib.ingredient",
+    "fields": {
+      "name": "mantequilla"
+    }
+  },
+  {
+    "pk": 6,
+    "model": "recipelib.ingredient",
+    "fields": {
+      "name": "leche"
+    }
+  },
+  {
+    "pk": 7,
+    "model": "recipelib.ingredient",
+    "fields": {
+      "name": "sal"
+    }
+  }
 ]

@@ -7,8 +7,145 @@
       "name": "huevo frito",
       "description": "el mejor huevo frito de la galaxia",
       "picture_url": "https://img-global.cpcdn.com/recipes/38df0212b6629a5a/400x400cq70/photo.jpg",
-      "created_at": "2012-02-23 13:30",
-      "updated_at": "2012-02-23 13:30"
+      "created_at": "2021-02-23 13:30",
+      "updated_at": "2021-02-23 13:30"
+    }
+  },
+  {
+    "pk": 2,
+    "model": "recipelib.recipe",
+    "fields": {
+      "user_id": 1,
+      "name": "puré",
+      "picture_url": "https://cdn.kiwilimon.com/recetaimagen/1893/th5-640x640-13282.jpg",
+      "created_at": "2021-02-23 13:30",
+      "updated_at": "2021-02-23 13:30"
+    }
+  },
+  {
+    "pk": 3,
+    "model": "recipelib.recipe",
+    "fields": {
+      "user_id": 1,
+      "name": "los mejores huevos revueltos",
+      "picture_url": "https://cdn7.kiwilimon.com/recetaimagen/1094/640x426/11443.jpg.webp",
+      "created_at": "2021-02-23 13:30",
+      "updated_at": "2021-02-23 13:30"
+    }
+  },
+  {
+    "pk": 4,
+    "model": "recipelib.recipe",
+    "fields": {
+      "user_id": 1,
+      "name": "papas mayo",
+      "picture_url": "https://www.comidastipicaschilenas.com/wp-content/uploads/2020/04/papas-mayo-scaled.jpg",
+      "created_at": "2020-02-23 13:30",
+      "updated_at": "2020-02-23 13:30"
+    }
+  },
+  {
+    "pk": 5,
+    "model": "recipelib.recipe",
+    "fields": {
+      "user_id": 1,
+      "name": "papas fritas",
+      "picture_url": "https://cdn2.cocinadelirante.com/sites/default/files/styles/gallerie/public/images/2019/11/oleicopapasfritas.jpg",
+      "created_at": "2020-02-23 13:30",
+      "updated_at": "2020-02-23 13:30"
+    }
+  },
+  {
+    "pk": 6,
+    "model": "recipelib.recipe",
+    "fields": {
+      "user_id": 1,
+      "name": "donas",
+      "description": "la receta más facil de donas caceras",
+      "picture_url": "https://cdn2.cocinadelirante.com/sites/default/files/styles/gallerie/public/images/2019/12/tips-para-donas-caseras.jpg",
+      "created_at": "2020-02-23 13:30",
+      "updated_at": "2020-02-23 13:30"
+    }
+  },
+  {
+    "pk": 7,
+    "model": "recipelib.recipe",
+    "fields": {
+      "user_id": 2,
+      "name": "sopaipillas",
+      "description": "lo mejor para los días fríos",
+      "picture_url": "https://comohacer.cl/wp-content/uploads/2021/10/sopaipillas.jpg",
+      "created_at": "2020-02-23 13:30",
+      "updated_at": "2020-02-23 13:30"
+    }
+  },
+  {
+    "pk": 8,
+    "model": "recipelib.recipe",
+    "fields": {
+      "user_id": 2,
+      "name": "pebre",
+      "description": "se nos viene el 18!!!",
+      "picture_url": "https://www.midiariodecocina.com/wp-content/uploads/2014/09/Pebre01.jpg",
+      "created_at": "2020-02-23 13:30",
+      "updated_at": "2020-02-23 13:30"
+    }
+  },
+  {
+    "pk": 9,
+    "model": "recipelib.recipe",
+    "fields": {
+      "user_id": 2,
+      "name": "completo mojado",
+      "description": "la receta originaria de talca",
+      "picture_url": "https://cooperativa.cl/noticias/site/artic/20210524/imag/foto_0000001420210524212854.jpg",
+      "created_at": "2020-02-23 13:30",
+      "updated_at": "2020-02-23 13:30"
+    }
+  },
+  {
+    "pk": 10,
+    "model": "recipelib.recipe",
+    "fields": {
+      "user_id": 2,
+      "name": "chapaleles chilotes",
+      "picture_url": "https://comidaschilenas.com/wp-content/uploads/2019/01/Receta-de-chapaleles-chilenos.jpg",
+      "created_at": "2020-02-23 13:30",
+      "updated_at": "2020-02-23 13:30"
+    }
+  },
+  {
+    "pk": 11,
+    "model": "recipelib.recipe",
+    "fields": {
+      "user_id": 2,
+      "name": "milcao",
+      "description": "la receta originaria de chiloé",
+      "picture_url": "https://www.comidastipicaschilenas.com/wp-content/uploads/2020/04/receta-de-milcao.jpg",
+      "created_at": "2020-02-23 13:30",
+      "updated_at": "2020-02-23 13:30"
+    }
+  },
+  {
+    "pk": 12,
+    "model": "recipelib.recipe",
+    "fields": {
+      "user_id": 2,
+      "name": "kuchen de ciruelas y duraznos",
+      "picture_url": "https://www.midiariodecocina.com/wp-content/uploads/2018/09/Kuchen-de-ciruelas-y-duraznos01.jpg",
+      "created_at": "2020-02-23 13:30",
+      "updated_at": "2020-02-23 13:30"
+    }
+  },
+  {
+    "pk": 13,
+    "model": "recipelib.recipe",
+    "fields": {
+      "user_id": 2,
+      "name": "pie de limón",
+      "picture_url": "https://cocinalocal.cl/wp-content/uploads/2021/08/pie-de-limon.jpg",
+      "created_at": "2020-02-23 13:30",
+      "updated_at": "2020-02-23 13:30"
     }
   }
 ]

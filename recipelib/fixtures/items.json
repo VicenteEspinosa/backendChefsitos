@@ -25,5 +25,95 @@
       "body": "cocina hasta que la llema cambie de color",
       "order_number": 3
     }
+  },
+  {
+    "pk": 4,
+    "model": "recipelib.item",
+    "fields": {
+      "recipe_id":2,
+      "body": "cocinar papas en una hoya con agua hasta que estas se encuentren blandas",
+      "order_number": 1
+    }
+  },
+  {
+    "pk": 5,
+    "model": "recipelib.item",
+    "fields": {
+      "recipe_id":2,
+      "body": "pelar y cortar papas en cuadraditos",
+      "order_number": 0
+    }
+  },
+  {
+    "pk": 6,
+    "model": "recipelib.item",
+    "fields": {
+      "recipe_id":2,
+      "body": "moler papas",
+      "order_number": 2
+    }
+  },
+  {
+    "pk": 7,
+    "model": "recipelib.item",
+    "fields": {
+      "recipe_id":2,
+      "body": "mezclar con la leche mantequilla y sal",
+      "order_number": 3
+    }
+  },
+  {
+    "pk": 8,
+    "model": "recipelib.item",
+    "fields": {
+      "recipe_id":3,
+      "body": "en un recipiente, mezcle la leche y los huevos y bata con un tenedor",
+      "order_number": 0
+    }
+  },
+  {
+    "pk": 9,
+    "model": "recipelib.item",
+    "fields": {
+      "recipe_id":3,
+      "body": "Derrita la mantequilla en un sartén a fuego medio-bajo hasta que burbujee",
+      "order_number": 1
+    }
+  },
+  {
+    "pk": 10,
+    "model": "recipelib.item",
+    "fields": {
+      "recipe_id":3,
+      "body": "Agregue un poco de sal a la mezcla de huevo y ponga sobre el sartén",
+      "order_number": 2
+    }
+  },
+  {
+    "pk": 11,
+    "model": "recipelib.item",
+    "fields": {
+      "recipe_id":3,
+      "body": "en cuanto se empiece a cocer el huevo, suba la temperatura a alta",
+      "order_number": 3
+    }
+  },
+  {
+    "pk": 12,
+    "model": "recipelib.item",
+    "fields": {
+      "recipe_id":3,
+      "body": "con una espátula o cuchara de palo, envuelva los huevos sobre si mismos",
+      "order_number": 4
+    }
+  },
+  {
+    "pk": 13,
+    "model": "recipelib.item",
+    "fields": {
+      "recipe_id":3,
+      "body": "En cuanto ya no haya casi líquido del huevo, apague el fuego y sirva en los platos",
+      "order_number": 5
+    }
   }
 ]
