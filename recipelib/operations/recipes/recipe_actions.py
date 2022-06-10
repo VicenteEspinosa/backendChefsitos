@@ -1,4 +1,5 @@
 from django.db import transaction
+from django.db.models import Q
 from django.http import JsonResponse
 
 from recipelib.models import (
@@ -213,6 +214,21 @@ def delete_recipe(req, recipe):
         recipe.delete()
         return JsonResponse(
             {"message": "Recipe deleted successfully"},
+            safe=False,
+            status=200,
+        )
+    except Exception as err:
+        print(err)
+        return error_json_response(err)
+
+
+def get_feed(req):
+    try:
+        recipes = Recipe.objects.filter(~Q(user=req.user)).order_by(
+            "-created_at"
+        )
+        return JsonResponse(
+            RecipeSerializer(recipes, many=True).data,
             safe=False,
             status=200,
         )
