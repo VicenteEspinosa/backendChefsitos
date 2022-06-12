@@ -103,6 +103,19 @@ class ItemSerializer(ModelSerializer):
         fields = ("id", "url", "body", "order_number")
 
 
+class LikeSerializer(ModelSerializer):
+    recipe_id = serializers.ReadOnlyField(source="recipe.id")
+    user_id = serializers.ReadOnlyField(source="user.id")
+
+    class Meta:
+        model = RecipeMeasurementIngredient
+
+        fields = (
+            "recipe_id",
+            "user_id",
+        )
+
+
 class RecipeSerializer(ModelSerializer):
     ingredients = RecipeMeasurementIngredientSerializer(
         source="recipemeasurementingredient_set", many=True, read_only=True
@@ -111,6 +124,7 @@ class RecipeSerializer(ModelSerializer):
     tags = RecipeTagSerializer(
         source="recipetag_set", many=True, read_only=True
     )
+    likes = LikeSerializer(source="like_set", many=True, read_only=True)
 
     class Meta:
         model = Recipe
@@ -126,6 +140,7 @@ class RecipeSerializer(ModelSerializer):
             "items",
             "tags",
             "user_id",
+            "likes",
         )
 
 

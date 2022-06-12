@@ -6,6 +6,7 @@ from django.urls import reverse
 
 from recipelib.models import (
     Ingredient,
+    Like,
     Measurement,
     Recipe,
     RecipeMeasurementIngredient,
@@ -189,3 +190,57 @@ class TestRecipeViews(TransactionTestCase):
         response = client.get(url)
         data = response.json()
         self.assertEqual(RecipeSerializer(recipe).data in data, False)
+
+    def test_GET_feed_is_ordered_by_created_at(self):
+        client = Client()
+        client.force_login(
+            User.objects.get_or_create(username="generic_user")[0]
+        )
+        first_recipe = Recipe.objects.create(
+            user=User.objects.get_or_create(username="other_generic_user")[0],
+            name="cebolla picada",
+            description="",
+            private=False,
+            picture_url="",
+        )
+        second_recipe = Recipe.objects.create(
+            user=User.objects.get_or_create(username="other_generic_user")[0],
+            name="cebolla picada",
+            description="",
+            private=False,
+            picture_url="",
+        )
+        url = reverse("feed")
+        response = client.get(url)
+        data = response.json()
+        self.assertEqual(RecipeSerializer(second_recipe).data, data[0])
+        self.assertEqual(RecipeSerializer(first_recipe).data, data[1])
+
+    def test_GET_feed_is_ordered_by_popularity(self):
+        client = Client()
+        client.force_login(
+            User.objects.get_or_create(username="generic_user")[0]
+        )
+        first_recipe = Recipe.objects.create(
+            user=User.objects.get_or_create(username="other_generic_user")[0],
+            name="cebolla picada",
+            description="",
+            private=False,
+            picture_url="",
+        )
+        second_recipe = Recipe.objects.create(
+            user=User.objects.get_or_create(username="other_generic_user")[0],
+            name="cebolla picada",
+            description="",
+            private=False,
+            picture_url="",
+        )
+        Like.objects.create(
+            user=User.objects.get_or_create(username="generic_user")[0],
+            recipe=first_recipe,
+        )
+        url = reverse("feed")
+        response = client.get(url, {"order_by": "popularity"})
+        data = response.json()
+        self.assertEqual(RecipeSerializer(second_recipe).data, data[1])
+        self.assertEqual(RecipeSerializer(first_recipe).data, data[0])

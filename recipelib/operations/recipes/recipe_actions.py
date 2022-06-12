@@ -1,5 +1,5 @@
 from django.db import transaction
-from django.db.models import Q
+from django.db.models import Count, Q
 from django.http import JsonResponse
 
 from recipelib.models import (
@@ -224,8 +224,15 @@ def delete_recipe(req, recipe):
 
 def get_feed(req):
     try:
-        recipes = Recipe.objects.filter(~Q(user=req.user)).order_by(
-            "-created_at"
+        order_by = req.GET.get("order_by", "")
+        order_list = []
+        if order_by == "popularity":
+            order_list.append("-count")
+        order_list.append("-created_at")
+        recipes = (
+            Recipe.objects.filter(~Q(user=req.user))
+            .annotate(count=Count("like"))
+            .order_by(*order_list)
         )
         return JsonResponse(
             RecipeSerializer(recipes, many=True).data,
