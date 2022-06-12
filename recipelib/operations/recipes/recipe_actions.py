@@ -1,5 +1,5 @@
 from django.db import transaction
-from django.db.models import Count, Q
+from django.db.models import Case, Count, F, IntegerField, Q, When
 from django.http import JsonResponse
 
 from recipelib.models import (
@@ -225,13 +225,30 @@ def delete_recipe(req, recipe):
 def get_feed(req):
     try:
         order_by = req.GET.get("order_by", "")
-        order_list = []
         if order_by == "popularity":
-            order_list.append("-count")
-        order_list.append("-created_at")
+            order_list = ["-popularity", "-created_at"]
+        else:
+            order_list = ["-created_at", "-popularity"]
+
         recipes = (
             Recipe.objects.filter(~Q(user=req.user))
-            .annotate(count=Count("like"))
+            .annotate(
+                likes=Count(
+                    Case(
+                        When(rating__like=True, then=1),
+                        output_field=IntegerField(),
+                    )
+                )
+            )
+            .annotate(
+                dislikes=Count(
+                    Case(
+                        When(rating__like=False, then=1),
+                        output_field=IntegerField(),
+                    )
+                )
+            )
+            .annotate(popularity=F("likes") - F("dislikes"))
             .order_by(*order_list)
         )
         return JsonResponse(

@@ -6,6 +6,7 @@ from recipelib.models import (
     Item,
     Measurement,
     Profile,
+    Rating,
     Recipe,
     RecipeMeasurementIngredient,
     Tag,
@@ -103,17 +104,11 @@ class ItemSerializer(ModelSerializer):
         fields = ("id", "url", "body", "order_number")
 
 
-class LikeSerializer(ModelSerializer):
-    recipe_id = serializers.ReadOnlyField(source="recipe.id")
-    user_id = serializers.ReadOnlyField(source="user.id")
-
+class RatingSerializer(ModelSerializer):
     class Meta:
-        model = RecipeMeasurementIngredient
+        model = Rating
 
-        fields = (
-            "recipe_id",
-            "user_id",
-        )
+        fields = ("recipe_id", "user_id", "like")
 
 
 class RecipeSerializer(ModelSerializer):
@@ -124,7 +119,7 @@ class RecipeSerializer(ModelSerializer):
     tags = RecipeTagSerializer(
         source="recipetag_set", many=True, read_only=True
     )
-    likes = LikeSerializer(source="like_set", many=True, read_only=True)
+    ratings = RatingSerializer(source="rating_set", many=True, read_only=True)
 
     class Meta:
         model = Recipe
@@ -140,7 +135,7 @@ class RecipeSerializer(ModelSerializer):
             "items",
             "tags",
             "user_id",
-            "likes",
+            "ratings",
         )
 
 
