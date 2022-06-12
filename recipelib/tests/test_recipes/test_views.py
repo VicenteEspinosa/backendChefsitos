@@ -6,8 +6,8 @@ from django.urls import reverse
 
 from recipelib.models import (
     Ingredient,
-    Like,
     Measurement,
+    Rating,
     Recipe,
     RecipeMeasurementIngredient,
     Tag,
@@ -235,9 +235,10 @@ class TestRecipeViews(TransactionTestCase):
             private=False,
             picture_url="",
         )
-        Like.objects.create(
+        Rating.objects.create(
             user=User.objects.get_or_create(username="generic_user")[0],
             recipe=first_recipe,
+            like=True,
         )
         url = reverse("feed")
         response = client.get(url, {"order_by": "popularity"})
