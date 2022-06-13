@@ -14,6 +14,7 @@ class Command(BaseCommand):
         call_command("loaddata", "recipe_ingredient_measurement")
         call_command("loaddata", "items")
         call_command("loaddata", "recipe_tag")
+        call_command("loaddata", "ratings")
         # Fix the passwords of fixtures
         for user in User.objects.all():
             user.set_password(user.password)

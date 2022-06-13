@@ -1,4 +1,5 @@
 from django.db import transaction
+from django.db.models import Case, Count, F, IntegerField, Q, When
 from django.http import JsonResponse
 
 from recipelib.models import (
@@ -213,6 +214,45 @@ def delete_recipe(req, recipe):
         recipe.delete()
         return JsonResponse(
             {"message": "Recipe deleted successfully"},
+            safe=False,
+            status=200,
+        )
+    except Exception as err:
+        print(err)
+        return error_json_response(err)
+
+
+def get_feed(req):
+    try:
+        order_by = req.GET.get("order_by", "")
+        if order_by == "popularity":
+            order_list = ["-popularity", "-created_at"]
+        else:
+            order_list = ["-created_at", "-popularity"]
+
+        recipes = (
+            Recipe.objects.filter(~Q(user=req.user))
+            .annotate(
+                likes=Count(
+                    Case(
+                        When(rating__like=True, then=1),
+                        output_field=IntegerField(),
+                    )
+                )
+            )
+            .annotate(
+                dislikes=Count(
+                    Case(
+                        When(rating__like=False, then=1),
+                        output_field=IntegerField(),
+                    )
+                )
+            )
+            .annotate(popularity=F("likes") - F("dislikes"))
+            .order_by(*order_list)
+        )
+        return JsonResponse(
+            RecipeSerializer(recipes, many=True).data,
             safe=False,
             status=200,
         )

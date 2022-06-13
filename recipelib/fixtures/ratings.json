@@ -1,0 +1,74 @@
+[
+  {
+    "pk": 1,
+    "model": "recipelib.rating",
+    "fields": {
+      "recipe_id": 1,
+      "user_id": 1,
+      "like": true
+    }
+  },
+  {
+    "pk": 2,
+    "model": "recipelib.rating",
+    "fields": {
+      "recipe_id": 12,
+      "user_id": 2,
+      "like": true
+    }
+  },
+  {
+    "pk": 3,
+    "model": "recipelib.rating",
+    "fields": {
+      "recipe_id": 13,
+      "user_id": 2,
+      "like": true
+    }
+  },
+  {
+    "pk": 4,
+    "model": "recipelib.rating",
+    "fields": {
+      "recipe_id": 13,
+      "user_id": 1,
+      "like": true
+    }
+  },
+  {
+    "pk": 5,
+    "model": "recipelib.rating",
+    "fields": {
+      "recipe_id": 11,
+      "user_id": 2,
+      "like": false
+    }
+  },
+  {
+    "pk": 6,
+    "model": "recipelib.rating",
+    "fields": {
+      "recipe_id": 11,
+      "user_id": 1,
+      "like": true
+    }
+  },
+  {
+    "pk": 7,
+    "model": "recipelib.rating",
+    "fields": {
+      "recipe_id": 10,
+      "user_id": 2,
+      "like": false
+    }
+  },
+  {
+    "pk": 8,
+    "model": "recipelib.rating",
+    "fields": {
+      "recipe_id": 10,
+      "user_id": 1,
+      "like": false
+    }
+  }
+]

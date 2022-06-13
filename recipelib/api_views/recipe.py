@@ -14,6 +14,7 @@ from recipelib.operations.recipes.recipe_actions import (
     create_recipe,
     delete_recipe,
     edit_recipe,
+    get_feed,
     get_self_recipes,
     get_single_recipe,
 )
@@ -48,3 +49,10 @@ class SelfRecipesView(View):
     @method_decorator(logged_in_check)
     def get(self, req):
         return get_self_recipes(req)
+
+
+@method_decorator(csrf_exempt, name="dispatch")
+class FeedView(View):
+    @method_decorator(logged_in_check)
+    def get(self, req):
+        return get_feed(req)

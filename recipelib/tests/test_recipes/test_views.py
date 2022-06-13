@@ -7,11 +7,13 @@ from django.urls import reverse
 from recipelib.models import (
     Ingredient,
     Measurement,
+    Rating,
     Recipe,
     RecipeMeasurementIngredient,
     Tag,
     User,
 )
+from recipelib.serializers import RecipeSerializer
 
 
 class TestRecipeViews(TransactionTestCase):
@@ -143,3 +145,103 @@ class TestRecipeViews(TransactionTestCase):
         url = reverse("recipes", args=[1])
         response = client.get(url)
         self.assertEqual(response.status_code, 404)
+
+    def test_GET_feed(self):
+        client = Client()
+        client.force_login(
+            User.objects.get_or_create(username="generic_user")[0]
+        )
+        url = reverse("feed")
+        response = client.get(url)
+        data = response.json()
+        self.assertEqual(response.status_code, 200)
+        self.assertIsInstance(data, list)
+
+    def test_GET_feed_other_users_recipe_is_included(self):
+        client = Client()
+        client.force_login(
+            User.objects.get_or_create(username="generic_user")[0]
+        )
+        recipe = Recipe.objects.create(
+            user=User.objects.get_or_create(username="other_generic_user")[0],
+            name="cebolla picada",
+            description="",
+            private=False,
+            picture_url="",
+        )
+        url = reverse("feed")
+        response = client.get(url)
+        data = response.json()
+        self.assertEqual(RecipeSerializer(recipe).data in data, True)
+
+    def test_GET_feed_req_users_recipe_is_not_included(self):
+        client = Client()
+        client.force_login(
+            User.objects.get_or_create(username="generic_user")[0]
+        )
+        recipe = Recipe.objects.create(
+            user=User.objects.get_or_create(username="generic_user")[0],
+            name="cebolla picada",
+            description="",
+            private=False,
+            picture_url="",
+        )
+        url = reverse("feed")
+        response = client.get(url)
+        data = response.json()
+        self.assertEqual(RecipeSerializer(recipe).data in data, False)
+
+    def test_GET_feed_is_ordered_by_created_at(self):
+        client = Client()
+        client.force_login(
+            User.objects.get_or_create(username="generic_user")[0]
+        )
+        first_recipe = Recipe.objects.create(
+            user=User.objects.get_or_create(username="other_generic_user")[0],
+            name="cebolla picada",
+            description="",
+            private=False,
+            picture_url="",
+        )
+        second_recipe = Recipe.objects.create(
+            user=User.objects.get_or_create(username="other_generic_user")[0],
+            name="cebolla picada",
+            description="",
+            private=False,
+            picture_url="",
+        )
+        url = reverse("feed")
+        response = client.get(url)
+        data = response.json()
+        self.assertEqual(RecipeSerializer(second_recipe).data, data[0])
+        self.assertEqual(RecipeSerializer(first_recipe).data, data[1])
+
+    def test_GET_feed_is_ordered_by_popularity(self):
+        client = Client()
+        client.force_login(
+            User.objects.get_or_create(username="generic_user")[0]
+        )
+        first_recipe = Recipe.objects.create(
+            user=User.objects.get_or_create(username="other_generic_user")[0],
+            name="cebolla picada",
+            description="",
+            private=False,
+            picture_url="",
+        )
+        second_recipe = Recipe.objects.create(
+            user=User.objects.get_or_create(username="other_generic_user")[0],
+            name="cebolla picada",
+            description="",
+            private=False,
+            picture_url="",
+        )
+        Rating.objects.create(
+            user=User.objects.get_or_create(username="generic_user")[0],
+            recipe=first_recipe,
+            like=True,
+        )
+        url = reverse("feed")
+        response = client.get(url, {"order_by": "popularity"})
+        data = response.json()
+        self.assertEqual(RecipeSerializer(second_recipe).data, data[1])
+        self.assertEqual(RecipeSerializer(first_recipe).data, data[0])
