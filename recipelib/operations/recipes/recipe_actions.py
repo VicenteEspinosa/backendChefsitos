@@ -264,13 +264,9 @@ def get_feed(req):
 
 def rate_recipe(req, data, recipe):
     try:
-        rating = Rating.objects.get(recipe=recipe, user=req.user)
-        if rating:
-            rating.like = data["like"]
-        else:
-            rating = Rating.objects.create(
-                recipe=recipe, like=data["like"], user=req.user
-            )
+        rating = Rating.objects.get_or_create(recipe=recipe, user=req.user)[0]
+        print("domo")
+        rating.like = data["like"]
         rating.save()
         return JsonResponse(
             RatingSerializer(rating).data,

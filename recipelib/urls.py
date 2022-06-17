@@ -11,7 +11,7 @@ urlpatterns = [
     path(
         "recipes/<int:recipe_id>/rate/",
         views.RateRecipeView.as_view(),
-        name="feed",
+        name="rate",
     ),
     path(
         "recipes/<int:recipe_id>/",
