@@ -10,6 +10,10 @@ from recipelib.api_views.decorators.user import logged_in_check
 from recipelib.infrastructure.validation.request_validation import (
     validate_request,
 )
+from recipelib.operations.recipes.rating_actions import (
+    delete_rating,
+    rate_recipe,
+)
 from recipelib.operations.recipes.recipe_actions import (
     create_recipe,
     delete_recipe,
@@ -17,7 +21,6 @@ from recipelib.operations.recipes.recipe_actions import (
     get_feed,
     get_self_recipes,
     get_single_recipe,
-    rate_recipe,
 )
 
 
@@ -65,3 +68,8 @@ class RateRecipeView(View):
     @method_decorator(find_recipe_by_id)
     def post(self, req, recipe):
         return validate_request(req, rate_recipe, recipe)
+
+    @method_decorator(logged_in_check)
+    @method_decorator(find_recipe_by_id)
+    def delete(self, req, recipe):
+        return delete_rating(req, recipe)
