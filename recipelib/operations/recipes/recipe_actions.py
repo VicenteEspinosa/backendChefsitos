@@ -11,7 +11,8 @@ from recipelib.models import (
     RecipeTag,
     Tag,
 )
-from recipelib.serializers import RecipeSerializer
+from recipelib.models.rating import Rating
+from recipelib.serializers import RatingSerializer, RecipeSerializer
 from recipelib.utils import error_json_response, not_found_json_response
 
 schema = {
@@ -259,3 +260,32 @@ def get_feed(req):
     except Exception as err:
         print(err)
         return error_json_response(err)
+
+
+def rate_recipe(req, data, recipe):
+    try:
+        rating = Rating.objects.get(recipe=recipe, user=req.user)
+        if rating:
+            rating.like = data["like"]
+        else:
+            rating = Rating.objects.create(
+                recipe=recipe, like=data["like"], user=req.user
+            )
+        rating.save()
+        return JsonResponse(
+            RatingSerializer(rating).data,
+            safe=False,
+            status=201,
+        )
+    except Exception as err:
+        print(err)
+        return error_json_response(err)
+
+
+rate_recipe.schema = {
+    "type": "object",
+    "properties": {
+        "like": {"type": "boolean"},
+    },
+    "required": ["like"],
+}

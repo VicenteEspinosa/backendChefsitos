@@ -17,6 +17,7 @@ from recipelib.operations.recipes.recipe_actions import (
     get_feed,
     get_self_recipes,
     get_single_recipe,
+    rate_recipe,
 )
 
 
@@ -56,3 +57,11 @@ class FeedView(View):
     @method_decorator(logged_in_check)
     def get(self, req):
         return get_feed(req)
+
+
+@method_decorator(csrf_exempt, name="dispatch")
+class RateRecipeView(View):
+    @method_decorator(logged_in_check)
+    @method_decorator(find_recipe_by_id)
+    def post(self, req, recipe):
+        return validate_request(req, rate_recipe, recipe)
