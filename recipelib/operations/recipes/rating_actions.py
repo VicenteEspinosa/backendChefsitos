@@ -35,7 +35,7 @@ def delete_rating(req, recipe):
         if rating:
             rating[0].delete()
             return JsonResponse(
-                {"message": "Recipe deleted successfully"},
+                {"message": "Rating deleted successfully"},
                 safe=False,
                 status=200,
             )

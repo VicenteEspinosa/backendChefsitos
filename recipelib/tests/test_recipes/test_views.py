@@ -275,3 +275,37 @@ class TestRecipeViews(TransactionTestCase):
         data = response.json()
         self.assertEqual(RecipeSerializer(second_recipe).data, data[1])
         self.assertEqual(RecipeSerializer(first_recipe).data, data[0])
+
+    # DELETE #
+    def test_recipe_rating_DELETE_when_rating_exists(self):
+        client = Client()
+        user = User.objects.get_or_create(username="generic_user")[0]
+        client.force_login(user)
+        recipe = Recipe.objects.create(
+            user=User.objects.get_or_create(username="other_generic_user")[0],
+            name="cebolla picada",
+            description="",
+            private=False,
+            picture_url="",
+        )
+        Rating.objects.create(user=user, recipe=recipe, like=True)
+        url = reverse("rate", args=[recipe.id])
+        response = client.delete(url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_recipe_rating_DELETE_when_rating_not_exists(self):
+        client = Client()
+        user = User.objects.get_or_create(username="generic_user")[0]
+        client.force_login(user)
+        recipe = Recipe.objects.create(
+            user=User.objects.get_or_create(username="other_generic_user")[0],
+            name="cebolla picada",
+            description="",
+            private=False,
+            picture_url="",
+        )
+        url = reverse("rate", args=[recipe.id])
+        response = client.delete(url)
+        data = response.json()
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(data.get("message"), "rating not found")
