@@ -4,6 +4,7 @@ from recipelib.api_views.ingredient import IngredientView
 from recipelib.api_views.measurement import MeasurementView
 from recipelib.api_views.recipe import (
     FeedView,
+    RateRecipeView,
     RecipeView,
     SelfRecipesView,
 )
