@@ -10,6 +10,7 @@ from recipelib.api_views.recipe import (
 )
 from recipelib.api_views.tag import TagView
 from recipelib.api_views.user import (
+    UserFollow,
     UserSignin,
     UserSignout,
     UserSignup,

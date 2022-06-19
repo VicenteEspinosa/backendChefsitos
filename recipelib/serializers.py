@@ -14,6 +14,20 @@ from recipelib.models import (
 )
 
 
+class FollowingSerializer(ModelSerializer):
+    following = serializers.SerializerMethodField("get_following")
+
+    class Meta:
+        model = User
+        fields = (
+            "id",
+            "following",
+        )
+
+    def get_following(self, obj):
+        return ProfileSerializer(obj.profile).data.get("following")
+
+
 class UserSerializer(ModelSerializer):
     picture_url = serializers.SerializerMethodField("get_picture_url")
     description = serializers.SerializerMethodField("get_description")
@@ -40,7 +54,7 @@ class UserSerializer(ModelSerializer):
 class ProfileSerializer(ModelSerializer):
     class Meta:
         model = Profile
-        fields = ("description", "picture_url")
+        fields = ("description", "picture_url", "following")
 
 
 class MeasurementSerializer(ModelSerializer):
