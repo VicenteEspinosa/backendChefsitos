@@ -12,13 +12,12 @@ def show(request):
         return JsonResponse(
             UserSerializer(request.user).data, safe=False, status=201
         )
-    except Exception as err:
-        print(err)
+    except Exception as error:
+        print(error)
         return JsonResponse(
             {
                 "internalCode": "internal-error",
-                "message": "An error has ocurred",
-                "message": "An error has ocurred",
+                "message": str(error),
             },
             safe=False,
             status=500,
@@ -29,13 +28,12 @@ def show_by_id(_, user_id):
     try:
         user = User.objects.get(pk=user_id)
         return JsonResponse(UserSerializer(user).data, safe=False, status=201)
-    except Exception as err:
-        print(err)
+    except Exception as error:
+        print(error)
         return JsonResponse(
             {
                 "internalCode": "internal-error",
-                "message": "An error has ocurred",
-                "message": "An error has ocurred",
+                "message": str(error),
             },
             safe=False,
             status=500,
