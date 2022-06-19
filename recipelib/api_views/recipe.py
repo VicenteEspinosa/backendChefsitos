@@ -14,6 +14,7 @@ from recipelib.operations.recipes.recipe_actions import (
     create_recipe,
     delete_recipe,
     edit_recipe,
+    get_chef_recipes,
     get_feed,
     get_self_recipes,
     get_single_recipe,
@@ -56,3 +57,14 @@ class FeedView(View):
     @method_decorator(logged_in_check)
     def get(self, req):
         return get_feed(req)
+
+
+@method_decorator(csrf_exempt, name="dispatch")
+class SocialRecipesView(View):
+    @method_decorator(logged_in_check)
+    def get(self, req, user_id=None):
+        print("Before user_id:", user_id)
+        if user_id is not None:
+            print("After user_id:", user_id)
+            return get_chef_recipes(req, user_id)
+        # return get_chef_recipes(req)

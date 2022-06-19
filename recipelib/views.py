@@ -6,9 +6,11 @@ from recipelib.api_views.recipe import (
     FeedView,
     RecipeView,
     SelfRecipesView,
+    SocialRecipesView,
 )
 from recipelib.api_views.tag import TagView
 from recipelib.api_views.user import (
+    SocialUserView,
     UserSignin,
     UserSignout,
     UserSignup,
