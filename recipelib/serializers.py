@@ -107,7 +107,6 @@ class ItemSerializer(ModelSerializer):
 class RatingSerializer(ModelSerializer):
     class Meta:
         model = Rating
-
         fields = ("recipe_id", "user_id", "like")
 
 
