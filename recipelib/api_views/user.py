@@ -14,7 +14,7 @@ from recipelib.infrastructure.validation.request_validation import (
 from recipelib.operations.users.delete import delete
 from recipelib.operations.users.edit import edit
 from recipelib.operations.users.follow import follow
-from recipelib.operations.users.show import show
+from recipelib.operations.users.show import show, show_by_id
 from recipelib.operations.users.signin import signin
 from recipelib.operations.users.signout import signout
 from recipelib.operations.users.signup import signup
@@ -68,3 +68,9 @@ class UserView(View):
     @method_decorator(logged_in_check)
     def delete(self, request):
         return delete(request)
+
+
+class SocialUserView(View):
+    def get(self, request, user_id=None):
+        if user_id is not None:
+            return show_by_id(request, user_id)
