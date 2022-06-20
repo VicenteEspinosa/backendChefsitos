@@ -18,6 +18,11 @@ urlpatterns = [
         views.RecipeView.as_view(),
         name="recipes",
     ),
+    path(
+        "recipes/chef/<int:user_id>/",
+        views.SocialRecipesView.as_view(),
+        name="chef_recipes",
+    ),
     path("ingredients/", views.IngredientView.as_view(), name="ingredients"),
     path(
         "ingredients/<int:ingredient_id>/",
@@ -42,6 +47,11 @@ urlpatterns = [
     path("users/signin/", views.UserSignin.as_view(), name="user_signin"),
     path("users/signout/", views.UserSignout.as_view(), name="user_signout"),
     path("users/show/", views.UserView.as_view(), name="user_view"),
+    path(
+        "users/show/<int:user_id>/",
+        views.SocialUserView.as_view(),
+        name="user_show_by_id",
+    ),
     path("users/edit/", views.UserView.as_view(), name="user_edit"),
     path("users/delete/", views.UserView.as_view(), name="user_edit"),
 ]

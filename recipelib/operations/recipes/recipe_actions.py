@@ -10,6 +10,7 @@ from recipelib.models import (
     RecipeMeasurementIngredient,
     RecipeTag,
     Tag,
+    User,
 )
 from recipelib.serializers import RecipeSerializer
 from recipelib.utils import error_json_response, not_found_json_response
@@ -187,6 +188,20 @@ edit_recipe.schema = schema
 def get_self_recipes(req):
     try:
         recipes = Recipe.objects.filter(user=req.user).order_by("-created_at")
+        return JsonResponse(
+            RecipeSerializer(recipes, many=True).data,
+            safe=False,
+            status=200,
+        )
+    except Exception as err:
+        print(err)
+        return error_json_response(err)
+
+
+def get_chef_recipes(_, user_id):
+    try:
+        chef = User.objects.get(pk=user_id)
+        recipes = Recipe.objects.filter(user=chef).order_by("-created_at")
         return JsonResponse(
             RecipeSerializer(recipes, many=True).data,
             safe=False,

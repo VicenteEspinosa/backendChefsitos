@@ -18,6 +18,7 @@ from recipelib.operations.recipes.recipe_actions import (
     create_recipe,
     delete_recipe,
     edit_recipe,
+    get_chef_recipes,
     get_feed,
     get_self_recipes,
     get_single_recipe,
@@ -73,3 +74,11 @@ class RateRecipeView(View):
     @method_decorator(find_recipe_by_id)
     def delete(self, req, recipe):
         return delete_rating(req, recipe)
+
+
+@method_decorator(csrf_exempt, name="dispatch")
+class SocialRecipesView(View):
+    @method_decorator(logged_in_check)
+    def get(self, req, user_id=None):
+        if user_id is not None:
+            return get_chef_recipes(req, user_id)
