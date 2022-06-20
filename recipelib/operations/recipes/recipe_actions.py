@@ -237,7 +237,7 @@ def delete_recipe(req, recipe):
         return error_json_response(err)
 
 
-def get_feed(req):
+def get_feed(req, following=False):
     try:
         order_by = req.GET.get("order_by", "")
         if order_by == "popularity":
@@ -266,6 +266,11 @@ def get_feed(req):
             .annotate(popularity=F("likes") - F("dislikes"))
             .order_by(*order_list)
         )
+        if following:
+            following_list = req.user.profile.following.all().values_list(
+                "user", flat=True
+            )
+            recipes = recipes.filter(user__in=following_list)
         return JsonResponse(
             RecipeSerializer(recipes, many=True).data,
             safe=False,

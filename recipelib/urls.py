@@ -9,6 +9,11 @@ urlpatterns = [
     ),
     path("recipes/feed/", views.FeedView.as_view(), name="feed"),
     path(
+        "recipes/feed/following/",
+        views.FollowingFeedView.as_view(),
+        name="following_feed",
+    ),
+    path(
         "recipes/<int:recipe_id>/rate/",
         views.RateRecipeView.as_view(),
         name="rate",
