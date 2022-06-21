@@ -64,6 +64,13 @@ class FeedView(View):
 
 
 @method_decorator(csrf_exempt, name="dispatch")
+class FollowingFeedView(View):
+    @method_decorator(logged_in_check)
+    def get(self, req):
+        return get_feed(req, following=True)
+
+
+@method_decorator(csrf_exempt, name="dispatch")
 class RateRecipeView(View):
     @method_decorator(logged_in_check)
     @method_decorator(find_recipe_by_id)

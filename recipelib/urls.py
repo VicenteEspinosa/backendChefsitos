@@ -9,6 +9,11 @@ urlpatterns = [
     ),
     path("recipes/feed/", views.FeedView.as_view(), name="feed"),
     path(
+        "recipes/feed/following/",
+        views.FollowingFeedView.as_view(),
+        name="following_feed",
+    ),
+    path(
         "recipes/<int:recipe_id>/rate/",
         views.RateRecipeView.as_view(),
         name="rate",
@@ -58,5 +63,5 @@ urlpatterns = [
         name="user_show_by_id",
     ),
     path("users/edit/", views.UserView.as_view(), name="user_edit"),
-    path("users/delete/", views.UserView.as_view(), name="user_edit"),
+    path("users/delete/", views.UserView.as_view(), name="user_delete"),
 ]

@@ -10,7 +10,7 @@ from recipelib.serializers import UserSerializer
 def show(request):
     try:
         return JsonResponse(
-            UserSerializer(request.user).data, safe=False, status=201
+            UserSerializer(request.user).data, safe=False, status=200
         )
     except Exception as error:
         print(error)
@@ -30,7 +30,7 @@ def show_by_id(request, user_id):
         return JsonResponse(
             UserSerializer(user, context={"request": request}).data,
             safe=False,
-            status=201,
+            status=200,
         )
     except Exception as error:
         print(error)
