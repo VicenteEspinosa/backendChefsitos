@@ -65,11 +65,14 @@ class UserSerializer(ModelSerializer):
     def get_is_following(self, obj):
         if not self.context.get("request", None):
             return None
-        if self.context.get("request").user.is_authenticated:
+        current_user = self.context.get("request").user
+        if current_user.is_authenticated:
+            if current_user.id == obj.id:
+                return None
             return (
                 obj.profile.followers.all()
                 .values_list("user", flat=True)
-                .filter(user=self.context["request"].user)
+                .filter(user=current_user)
                 .exists()
             )
         return None
