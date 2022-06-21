@@ -28,6 +28,7 @@ def signin(req, data):
         else:
             return JsonResponse(
                 {
+                    "internalCode": "entity-not-found",
                     "message": "wrong credentials",
                 },
                 safe=False,
