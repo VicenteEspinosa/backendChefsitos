@@ -52,7 +52,7 @@ schema = {
         "items": {
             "type": "array",
             "items": {"$ref": "#/definitions/Item"},
-            # "minItems": 1, # Implementación pendiente de discusión
+            "minItems": 1,
         },
         "tagIds": {
             "type": "array",
@@ -64,7 +64,7 @@ schema = {
         "ingredients": {
             "type": "array",
             "items": {"$ref": "#/definitions/Ingredient"},
-            # "minItems": 1,
+            "minItems": 1,
         },
     },
 }
