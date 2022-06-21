@@ -63,5 +63,5 @@ urlpatterns = [
         name="user_show_by_id",
     ),
     path("users/edit/", views.UserView.as_view(), name="user_edit"),
-    path("users/delete/", views.UserView.as_view(), name="user_edit"),
+    path("users/delete/", views.UserView.as_view(), name="user_delete"),
 ]

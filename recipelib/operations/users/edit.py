@@ -44,7 +44,7 @@ def edit(request, data):
                 user.set_password(data.get("password"))
             user.save()
             return JsonResponse(
-                UserSerializer(user).data, safe=False, status=201
+                UserSerializer(user).data, safe=False, status=200
             )
         return already_exists_json_response(
             "User", "Username", data.get("username")
