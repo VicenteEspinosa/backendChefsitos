@@ -187,6 +187,41 @@ class TestRecipeViews(TransactionTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIsInstance(data, list)
 
+    def test_GET_feed_following(self):
+        client = Client()
+        current_user = User.objects.get_or_create(username="generic_user")[0]
+        client.force_login(current_user)
+        followed_user = User.objects.get_or_create(
+            username="other_generic_user"
+        )[0]
+        current_user.profile.following.add(followed_user.profile)
+        not_followed_user = User.objects.get_or_create(
+            username="another_generic_user"
+        )[0]
+        recipe_user_followed = Recipe.objects.create(
+            user=followed_user,
+            name="cebolla picada",
+            description="",
+            private=False,
+            picture_url="",
+        )
+        recipe_user_not_followed = Recipe.objects.create(
+            user=not_followed_user,
+            name="cebolla picada",
+            description="",
+            private=False,
+            picture_url="",
+        )
+        url = reverse("following_feed")
+        response = client.get(url)
+        data = response.json()
+        self.assertEqual(
+            RecipeSerializer(recipe_user_followed).data in data, True
+        )
+        self.assertEqual(
+            RecipeSerializer(recipe_user_not_followed).data in data, False
+        )
+
     def test_GET_feed_other_users_recipe_is_included(self):
         client = Client()
         client.force_login(
