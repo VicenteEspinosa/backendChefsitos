@@ -31,6 +31,9 @@ class FollowingSerializer(ModelSerializer):
 class UserSerializer(ModelSerializer):
     picture_url = serializers.SerializerMethodField("get_picture_url")
     description = serializers.SerializerMethodField("get_description")
+    followers = serializers.SerializerMethodField("get_followers")
+    following = serializers.SerializerMethodField("get_following")
+    is_following = serializers.SerializerMethodField("get_is_following")
 
     class Meta:
         model = User
@@ -42,6 +45,9 @@ class UserSerializer(ModelSerializer):
             "last_name",
             "description",
             "picture_url",
+            "followers",
+            "following",
+            "is_following",
         )
 
     def get_picture_url(self, obj):
@@ -49,6 +55,24 @@ class UserSerializer(ModelSerializer):
 
     def get_description(self, obj):
         return ProfileSerializer(obj.profile).data.get("description")
+
+    def get_followers(self, obj):
+        return list(obj.profile.followers.all().values_list("user", flat=True))
+
+    def get_following(self, obj):
+        return list(obj.profile.following.all().values_list("user", flat=True))
+
+    def get_is_following(self, obj):
+        if not self.context.get("request", None):
+            return None
+        if self.context.get("request").user.is_authenticated:
+            return (
+                obj.profile.followers.all()
+                .values_list("user", flat=True)
+                .filter(user=self.context["request"].user)
+                .exists()
+            )
+        return None
 
 
 class ProfileSerializer(ModelSerializer):

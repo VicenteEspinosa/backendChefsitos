@@ -24,10 +24,14 @@ def show(request):
         )
 
 
-def show_by_id(_, user_id):
+def show_by_id(request, user_id):
     try:
         user = User.objects.get(pk=user_id)
-        return JsonResponse(UserSerializer(user).data, safe=False, status=201)
+        return JsonResponse(
+            UserSerializer(user, context={"request": request}).data,
+            safe=False,
+            status=201,
+        )
     except Exception as error:
         print(error)
         return JsonResponse(
