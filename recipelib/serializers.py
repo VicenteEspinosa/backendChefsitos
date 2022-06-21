@@ -25,7 +25,7 @@ class FollowingSerializer(ModelSerializer):
         )
 
     def get_following(self, obj):
-        return ProfileSerializer(obj.profile).data.get("following")
+        return list(obj.profile.following.all().values_list("user", flat=True))
 
 
 class UserSerializer(ModelSerializer):
