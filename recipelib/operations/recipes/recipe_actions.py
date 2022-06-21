@@ -175,7 +175,7 @@ def edit_recipe(req, data, recipe):
         return JsonResponse(
             RecipeSerializer(recipe).data,
             safe=False,
-            status=201,
+            status=200,
         )
     except Exception as err:
         print(err)

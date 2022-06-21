@@ -11,7 +11,7 @@ def delete(request):
     try:
         request.user.delete()
         success = {"message": "user deleted successfully"}
-        return JsonResponse(success, safe=False, status=201)
+        return JsonResponse(success, safe=False, status=200)
     except Exception as err:
         print(err)
         return JsonResponse(

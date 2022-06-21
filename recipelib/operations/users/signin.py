@@ -28,11 +28,10 @@ def signin(req, data):
         else:
             return JsonResponse(
                 {
-                    "internalCode": "entity-not-found",
-                    "message": "'user' is not found",
+                    "message": "wrong credentials",
                 },
                 safe=False,
-                status=404,
+                status=401,
             )
     except Exception as err:
         print(err)
