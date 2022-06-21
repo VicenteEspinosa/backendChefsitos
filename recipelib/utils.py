@@ -37,6 +37,16 @@ def error_json_response(error):
     )
 
 
+def itself_error_json_response(object_name="user"):
+    return JsonResponse(
+        {
+            "message": f"The {object_name} cannot perform this action to itself",
+        },
+        safe=False,
+        status=403,
+    )
+
+
 def not_an_admin_json_response():
     return JsonResponse(
         {
