@@ -15,6 +15,16 @@ def already_exists_json_response(
     )
 
 
+def duplicated_error_json_response(object_name="ingredient"):
+    return JsonResponse(
+        {
+            "message": f"No {object_name} should be duplicated",
+        },
+        safe=False,
+        status=403,
+    )
+
+
 def empty_string_json_response(field_name="field"):
     return JsonResponse(
         {
@@ -34,6 +44,16 @@ def error_json_response(error):
         },
         safe=False,
         status=500,
+    )
+
+
+def itself_error_json_response(object_name="user"):
+    return JsonResponse(
+        {
+            "message": f"The {object_name} cannot perform this action to itself",
+        },
+        safe=False,
+        status=403,
     )
 
 

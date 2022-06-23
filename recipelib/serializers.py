@@ -6,6 +6,7 @@ from recipelib.models import (
     Item,
     Measurement,
     Profile,
+    Rating,
     Recipe,
     RecipeMeasurementIngredient,
     Tag,
@@ -13,9 +14,26 @@ from recipelib.models import (
 )
 
 
+class FollowingSerializer(ModelSerializer):
+    following = serializers.SerializerMethodField("get_following")
+
+    class Meta:
+        model = User
+        fields = (
+            "id",
+            "following",
+        )
+
+    def get_following(self, obj):
+        return list(obj.profile.following.all().values_list("user", flat=True))
+
+
 class UserSerializer(ModelSerializer):
     picture_url = serializers.SerializerMethodField("get_picture_url")
     description = serializers.SerializerMethodField("get_description")
+    followers = serializers.SerializerMethodField("get_followers")
+    following = serializers.SerializerMethodField("get_following")
+    is_following = serializers.SerializerMethodField("get_is_following")
 
     class Meta:
         model = User
@@ -27,6 +45,9 @@ class UserSerializer(ModelSerializer):
             "last_name",
             "description",
             "picture_url",
+            "followers",
+            "following",
+            "is_following",
         )
 
     def get_picture_url(self, obj):
@@ -35,11 +56,32 @@ class UserSerializer(ModelSerializer):
     def get_description(self, obj):
         return ProfileSerializer(obj.profile).data.get("description")
 
+    def get_followers(self, obj):
+        return list(obj.profile.followers.all().values_list("user", flat=True))
+
+    def get_following(self, obj):
+        return list(obj.profile.following.all().values_list("user", flat=True))
+
+    def get_is_following(self, obj):
+        if not self.context.get("request", None):
+            return None
+        current_user = self.context.get("request").user
+        if current_user.is_authenticated:
+            if current_user.id == obj.id:
+                return None
+            return (
+                obj.profile.followers.all()
+                .values_list("user", flat=True)
+                .filter(user=current_user)
+                .exists()
+            )
+        return None
+
 
 class ProfileSerializer(ModelSerializer):
     class Meta:
         model = Profile
-        fields = ("description", "picture_url")
+        fields = ("description", "picture_url", "following")
 
 
 class MeasurementSerializer(ModelSerializer):
@@ -103,6 +145,12 @@ class ItemSerializer(ModelSerializer):
         fields = ("id", "url", "body", "order_number")
 
 
+class RatingSerializer(ModelSerializer):
+    class Meta:
+        model = Rating
+        fields = ("recipe_id", "user_id", "like")
+
+
 class RecipeSerializer(ModelSerializer):
     ingredients = RecipeMeasurementIngredientSerializer(
         source="recipemeasurementingredient_set", many=True, read_only=True
@@ -111,6 +159,7 @@ class RecipeSerializer(ModelSerializer):
     tags = RecipeTagSerializer(
         source="recipetag_set", many=True, read_only=True
     )
+    ratings = RatingSerializer(source="rating_set", many=True, read_only=True)
 
     class Meta:
         model = Recipe
@@ -126,6 +175,7 @@ class RecipeSerializer(ModelSerializer):
             "items",
             "tags",
             "user_id",
+            "ratings",
         )
 
 
