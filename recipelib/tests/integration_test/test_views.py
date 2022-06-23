@@ -11,7 +11,7 @@ from recipelib.tests.integration_test.testing_data import test_user
 class IntegrationTest(TransactionTestCase):
     reset_sequences = True
 
-    def create_recipe_full_path(self):
+    def test_create_recipe_full_path(self):
         # user signup
         client = Client()
         url = reverse("user_signup")
@@ -49,7 +49,7 @@ class IntegrationTest(TransactionTestCase):
             "private": False,
             "picture_url": "",
             "items": [{"body": "untar mermelada en pan", "order_number": 0}],
-            "tagIds": [1],
+            "tagIds": [],
             "ingredients": [
                 {
                     "measurement_id": 1,
