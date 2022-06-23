@@ -281,7 +281,8 @@ def get_feed(req, following=False):
             order_list = ["-created_at", "-popularity"]
 
         recipes = (
-            Recipe.objects.filter(~Q(user=req.user))
+            Recipe.objects.filter(private=False)
+            .filter(~Q(user=req.user))
             .annotate(
                 likes=Count(
                     Case(
