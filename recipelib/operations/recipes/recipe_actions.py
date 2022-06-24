@@ -236,7 +236,11 @@ def get_self_recipes(req):
 def get_chef_recipes(_, user_id):
     try:
         chef = User.objects.get(pk=user_id)
-        recipes = Recipe.objects.filter(user=chef).order_by("-created_at")
+        recipes = (
+            Recipe.objects.filter(private=False)
+            .filter(user=chef)
+            .order_by("-created_at")
+        )
         return JsonResponse(
             RecipeSerializer(recipes, many=True).data,
             safe=False,
@@ -281,7 +285,8 @@ def get_feed(req, following=False):
             order_list = ["-created_at", "-popularity"]
 
         recipes = (
-            Recipe.objects.filter(~Q(user=req.user))
+            Recipe.objects.filter(private=False)
+            .filter(~Q(user=req.user))
             .annotate(
                 likes=Count(
                     Case(
