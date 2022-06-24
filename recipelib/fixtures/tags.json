@@ -22,5 +22,13 @@
           "name": "vegetariano",
           "placeholder_url": "https://i0.wp.com/post.healthline.com/wp-content/uploads/2022/04/vegetarian-vegetables-eggs-1296x728-header.jpg?w=1155&h=1528"
         }
-    }
+    },
+    {
+      "pk": 4,
+      "model": "recipelib.tag",
+      "fields": {
+        "name": "dulce",
+        "placeholder_url": "https://img.freepik.com/vector-gratis/conjunto-iconos-tortas_1284-14668.jpg?w=740&t=st=1656048559~exp=1656049159~hmac=e688238fe607ec064977ccf58202184255c170886a0fde4a08a8fc7c3ffc093f"
+      }
+  }
 ]
