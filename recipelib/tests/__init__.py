@@ -1,3 +1,4 @@
+from .integration_test.test_views import IntegrationTest
 from .test_auth.test_views import TestAuthViews
 from .test_following.test_views import TestUserFollowViews
 from .test_ingredients.test_views import TestIngredientViews

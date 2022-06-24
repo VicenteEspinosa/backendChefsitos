@@ -48,6 +48,7 @@ class UserSerializer(ModelSerializer):
             "followers",
             "following",
             "is_following",
+            "is_superuser",
         )
 
     def get_picture_url(self, obj):
